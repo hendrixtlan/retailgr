@@ -1,0 +1,99 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retailgr"
+version = "0.1.0"
+description = "Open, cloud-native generative recommendations for retail - Stage 1 offline slice"
+requires-python = ">=3.10"
+dependencies = [
+    "pyspark>=3.5,<5",
+    # Used directly, not inherited. PySpark 4 converts to and from Arrow
+    # natively, but 3.5 is still what most managed Spark runs and there
+    # the conversion goes through pandas — `io/tables.py` has a fallback
+    # on both sides for exactly that. A clean install without pandas made
+    # those fallbacks raise ModuleNotFoundError instead of working.
+    "pandas>=2.0",
+    "torch>=2.2",
+    "numpy>=1.26",
+    "pyarrow>=14",
+    "PyYAML>=6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.5",
+    "httpx>=0.27",
+    # Validates deploy/k8s/ against the real Kubernetes API schemas, which it
+    # vendors — so tests/test_deploy.py needs no cluster and no network.
+    "kubernetes-validate>=1.33",
+    # Lets the online-store contract actually execute against the Redis
+    # protocol when no server is around. The contract records this as
+    # "partly verified" rather than counting it as the real backend.
+    "fakeredis>=2.20",
+    # Ships a compiled redis-server in the wheel, so the Redis backend is
+    # exercised against a real server rather than a stand-in.
+    "redislite>=6.2",
+    "pyiceberg[sql-sqlite,pyarrow]>=0.12",
+    # Only to parse this project's own /metrics output with the reference
+    # implementation. Nothing at runtime imports it: `serving/metrics.py`
+    # renders the format itself so metrics work with nothing installed.
+    "prometheus-client>=0.20",
+    # A binding over Prometheus's own PromQL grammar, so tests/test_alerts.py
+    # checks the alert expressions with a parser rather than a regex.
+    # `kubernetes-validate` cannot help there: PrometheusRule is a custom
+    # resource and its schema ships with the operator, not with Kubernetes.
+    "promql-parser>=0.10",
+]
+# Real Kafka. Without this the in-process broker still runs the whole
+# streaming path (streaming.broker=memory).
+streaming = ["kafka-python>=2.0"]
+# Apache Iceberg without a JVM. The Spark path pulls its runtime from Maven
+# Central at session start; this one is a wheel, which is the difference
+# between a lakehouse backend that runs on an air-gapped cluster and one that
+# does not.
+lakehouse = ["pyiceberg[sql-sqlite,pyarrow]>=0.12"]
+# The HTTP edge and a real online store. Without these the service still runs
+# in-process and is fully testable.
+serving = [
+    "fastapi>=0.110",
+    # Declared explicitly although FastAPI pulls it in: `api.py` imports
+    # pydantic at module level — it has to, because FastAPI resolves the
+    # request model's annotations at import time — so it is a direct
+    # dependency of this package and not FastAPI's business.
+    "pydantic>=2.0",
+    "uvicorn>=0.29",
+    "redis>=5.0",
+]
+# Approximate retrieval, for catalogs where the exact matmul stops fitting the
+# latency budget.
+serving-faiss = ["faiss-cpu>=1.8"]
+all = [
+    "kafka-python>=2.0",
+    "fastapi>=0.110",
+    "pydantic>=2.0",
+    "uvicorn>=0.29",
+    "redis>=5.0",
+]
+
+[project.scripts]
+retailgr = "retailgr.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "slow: end-to-end tests that start a Spark session",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
