@@ -1,0 +1,105 @@
+{
+  "variant": "config",
+  "vocab_size": 3663,
+  "k_values": [
+    10,
+    50,
+    200
+  ],
+  "base_model_config": "hstu_ml1m.yaml",
+  "models": {
+    "sasrec (baseline)": {
+      "type": "sasrec",
+      "overrides": {},
+      "fit": {
+        "train_windows": 5396.0,
+        "first_epoch_loss": 4.34371,
+        "final_epoch_loss": 2.84993,
+        "epochs": 8.0
+      },
+      "fit_seconds": 590.02,
+      "test": {
+        "overall": {
+          "hit_rate@10": 0.551489,
+          "hit_rate@200": 0.907234,
+          "hit_rate@50": 0.775319,
+          "ndcg@10": 0.164147,
+          "ndcg@200": 0.208713,
+          "ndcg@50": 0.160445,
+          "recall@10": 0.161402,
+          "recall@200": 0.308973,
+          "recall@50": 0.179457,
+          "coverage@10": 0.30849,
+          "coverage@50": 0.509419,
+          "coverage@200": 0.684139,
+          "eval_users": 1175.0
+        },
+        "by_category": {}
+      }
+    },
+    "hstu_full": {
+      "type": "hstu",
+      "overrides": {},
+      "fit": {
+        "train_windows": 5396.0,
+        "label_positions": 560953.0,
+        "first_epoch_loss": 4.28538,
+        "final_epoch_loss": 2.68779,
+        "epochs": 8.0,
+        "parameters": 277200.0
+      },
+      "fit_seconds": 493.01,
+      "test": {
+        "overall": {
+          "hit_rate@10": 0.562553,
+          "hit_rate@200": 0.894468,
+          "hit_rate@50": 0.759149,
+          "ndcg@10": 0.167268,
+          "ndcg@200": 0.204926,
+          "ndcg@50": 0.161346,
+          "recall@10": 0.163179,
+          "recall@200": 0.298979,
+          "recall@50": 0.179496,
+          "coverage@10": 0.274638,
+          "coverage@50": 0.460278,
+          "coverage@200": 0.635818,
+          "eval_users": 1175.0
+        },
+        "by_category": {}
+      }
+    },
+    "hstu_no_temporal_bias": {
+      "type": "hstu",
+      "overrides": {
+        "use_temporal_bias": false
+      },
+      "fit": {
+        "train_windows": 5396.0,
+        "label_positions": 560953.0,
+        "first_epoch_loss": 4.28245,
+        "final_epoch_loss": 2.83655,
+        "epochs": 8.0,
+        "parameters": 277200.0
+      },
+      "fit_seconds": 429.53,
+      "test": {
+        "overall": {
+          "hit_rate@10": 0.580426,
+          "hit_rate@200": 0.908936,
+          "hit_rate@50": 0.774468,
+          "ndcg@10": 0.173242,
+          "ndcg@200": 0.214329,
+          "ndcg@50": 0.167521,
+          "recall@10": 0.168172,
+          "recall@200": 0.310625,
+          "recall@50": 0.184039,
+          "coverage@10": 0.238875,
+          "coverage@50": 0.412503,
+          "coverage@200": 0.592411,
+          "eval_users": 1175.0
+        },
+        "by_category": {}
+      }
+    }
+  }
+}

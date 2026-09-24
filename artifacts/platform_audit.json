@@ -1,0 +1,133 @@
+{
+  "root": "src/retailgr",
+  "vendor_imports": [],
+  "hardcoded_endpoints": [],
+  "eager_optional_imports": [],
+  "swap_points": [
+    {
+      "name": "warehouse",
+      "setting": "warehouse.backend",
+      "default": "parquet",
+      "implementations": {
+        "parquet": {
+          "module": "retailgr.io.tables",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": null,
+          "conforms": true
+        },
+        "iceberg": {
+          "module": "retailgr.io.tables",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": null,
+          "conforms": true
+        }
+      },
+      "required_functions": [
+        "write_table",
+        "read_table",
+        "table_exists"
+      ]
+    },
+    {
+      "name": "broker",
+      "setting": "streaming.broker",
+      "default": "memory",
+      "implementations": {
+        "memory": {
+          "class": "retailgr.streaming.broker:InMemoryBroker",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": null,
+          "conforms": true
+        },
+        "kafka": {
+          "class": "retailgr.streaming.broker:KafkaBroker",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": "kafka",
+          "conforms": true
+        }
+      },
+      "protocol_methods": [
+        "close",
+        "commit",
+        "consume",
+        "create_topics",
+        "flush",
+        "produce"
+      ]
+    },
+    {
+      "name": "online_store",
+      "setting": "online_store.backend",
+      "default": "memory",
+      "implementations": {
+        "memory": {
+          "class": "retailgr.online_store:InMemoryOnlineStore",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": null,
+          "conforms": true
+        },
+        "redis": {
+          "class": "retailgr.online_store:RedisOnlineStore",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": "redis",
+          "conforms": true
+        }
+      },
+      "protocol_methods": [
+        "append_event",
+        "close",
+        "fallback",
+        "item_state",
+        "item_states",
+        "put_fallback",
+        "put_item_state",
+        "user_tail"
+      ]
+    },
+    {
+      "name": "retrieval_index",
+      "setting": "serving.index",
+      "default": "exact",
+      "implementations": {
+        "exact": {
+          "class": "retailgr.serving.retrieval:ExactRetrievalIndex",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": null,
+          "conforms": true
+        },
+        "faiss": {
+          "class": "retailgr.serving.retrieval:FaissRetrievalIndex",
+          "checked": true,
+          "missing": [],
+          "mismatched": {},
+          "optional_import": "faiss",
+          "conforms": true
+        }
+      },
+      "protocol_methods": [
+        "search"
+      ]
+    }
+  ],
+  "passed": true,
+  "failures": {
+    "vendor_imports": 0,
+    "hardcoded_endpoints": 0,
+    "eager_optional_imports": 0,
+    "non_conforming_backends": 0
+  }
+}

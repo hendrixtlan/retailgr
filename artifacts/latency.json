@@ -1,0 +1,88 @@
+{
+  "bundle": "/home/claude/retailgr/artifacts/bundle",
+  "model_version": "hstu_small-config-945",
+  "model_type": "hstu",
+  "variant": "config",
+  "dataset": "synthetic",
+  "requests": 500,
+  "warmup": 25,
+  "limit": 20,
+  "index_size": 945,
+  "retrieval_k": 800,
+  "rank_k": 300,
+  "users_available": 525,
+  "throughput_rps": 279.1,
+  "served_from": {
+    "model": 500
+  },
+  "mean_items_returned": 20.0,
+  "total_ms": {
+    "mean": 3.454,
+    "p50": 3.454,
+    "p95": 3.79,
+    "p99": 4.572,
+    "max": 7.202
+  },
+  "stages": {
+    "context_ms": {
+      "mean": 0.046,
+      "p50": 0.044,
+      "p95": 0.075,
+      "p99": 0.089,
+      "max": 0.097
+    },
+    "retrieval_ms": {
+      "mean": 1.737,
+      "p50": 1.733,
+      "p95": 1.907,
+      "p99": 2.217,
+      "max": 5.686
+    },
+    "filter_ms": {
+      "mean": 0.246,
+      "p50": 0.243,
+      "p95": 0.303,
+      "p99": 0.349,
+      "max": 3.109
+    },
+    "ranking_ms": {
+      "mean": 0.002,
+      "p50": 0.002,
+      "p95": 0.002,
+      "p99": 0.011,
+      "max": 0.026
+    },
+    "rerank_ms": {
+      "mean": 1.016,
+      "p50": 1.01,
+      "p95": 1.166,
+      "p99": 1.309,
+      "max": 2.626
+    }
+  },
+  "bootstrap": {
+    "catalog_rows": 3174,
+    "replay": {
+      "events_read": 90471,
+      "events_produced": 90471,
+      "events_rejected": 0,
+      "catalog_rows": 0,
+      "seconds": 0.81,
+      "events_per_second": 111859.8
+    },
+    "session_state": {
+      "interactions": 90471,
+      "catalog_updates": 3174,
+      "price_updates": 3174,
+      "inventory_updates": 3174,
+      "unknown_skus": 0,
+      "tokens_resolved": 90471
+    },
+    "fallback_size": 50,
+    "store": {
+      "users_with_tail": 2976,
+      "items_with_state": 3174,
+      "users_with_fallback": 0
+    }
+  }
+}

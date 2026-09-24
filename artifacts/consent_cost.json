@@ -1,0 +1,726 @@
+{
+  "variant": "config",
+  "model_config": "hstu_small.yaml",
+  "correlate": false,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "k_values": [
+    10
+  ],
+  "total_users": 2501,
+  "points": [
+    {
+      "rate": 1.0,
+      "train_users": 2501,
+      "metric": "recall@10",
+      "mean": 0.09549533333333333,
+      "std": 0.0013027825349356409,
+      "values": [
+        0.096999,
+        0.094782,
+        0.094705
+      ],
+      "runs": [
+        {
+          "train_users": 2501,
+          "fit": {
+            "train_windows": 2504.0,
+            "label_positions": 61012.0,
+            "first_epoch_loss": 6.31314,
+            "final_epoch_loss": 3.71106,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 13.27,
+          "test": {
+            "hit_rate@10": 0.270127,
+            "ndcg@10": 0.086187,
+            "recall@10": 0.096999,
+            "coverage@10": 0.324868,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.096999,
+              "ci_low": 0.085253,
+              "ci_high": 0.108741,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.086187,
+              "ci_low": 0.075809,
+              "ci_high": 0.097068,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.270127,
+              "ci_low": 0.241525,
+              "ci_high": 0.299788,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 2501,
+          "fit": {
+            "train_windows": 2504.0,
+            "label_positions": 61012.0,
+            "first_epoch_loss": 6.3242,
+            "final_epoch_loss": 3.7088,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 12.64,
+          "test": {
+            "hit_rate@10": 0.272246,
+            "ndcg@10": 0.084958,
+            "recall@10": 0.094782,
+            "coverage@10": 0.330159,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.094782,
+              "ci_low": 0.083566,
+              "ci_high": 0.106193,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.084958,
+              "ci_low": 0.074424,
+              "ci_high": 0.09576,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.272246,
+              "ci_low": 0.243618,
+              "ci_high": 0.301907,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 2501,
+          "fit": {
+            "train_windows": 2504.0,
+            "label_positions": 61012.0,
+            "first_epoch_loss": 6.32062,
+            "final_epoch_loss": 3.69412,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 12.62,
+          "test": {
+            "hit_rate@10": 0.270127,
+            "ndcg@10": 0.085341,
+            "recall@10": 0.094705,
+            "coverage@10": 0.325926,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.094705,
+              "ci_low": 0.083321,
+              "ci_high": 0.106068,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.085341,
+              "ci_low": 0.075163,
+              "ci_high": 0.096206,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.270127,
+              "ci_low": 0.240466,
+              "ci_high": 0.298729,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        }
+      ],
+      "relative": 1.0,
+      "beyond_seed_noise": false
+    },
+    {
+      "rate": 0.9,
+      "train_users": 2251,
+      "metric": "recall@10",
+      "mean": 0.09524066666666668,
+      "std": 0.0005250850724723879,
+      "values": [
+        0.094663,
+        0.09537,
+        0.095689
+      ],
+      "runs": [
+        {
+          "train_users": 2251,
+          "fit": {
+            "train_windows": 2254.0,
+            "label_positions": 54975.0,
+            "first_epoch_loss": 6.34618,
+            "final_epoch_loss": 3.7521,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 11.54,
+          "test": {
+            "hit_rate@10": 0.271186,
+            "ndcg@10": 0.084916,
+            "recall@10": 0.094663,
+            "coverage@10": 0.318519,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.094663,
+              "ci_low": 0.083521,
+              "ci_high": 0.105821,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.084916,
+              "ci_low": 0.074633,
+              "ci_high": 0.09578,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.271186,
+              "ci_low": 0.242585,
+              "ci_high": 0.299788,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 2251,
+          "fit": {
+            "train_windows": 2254.0,
+            "label_positions": 55005.0,
+            "first_epoch_loss": 6.35011,
+            "final_epoch_loss": 3.75236,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 12.39,
+          "test": {
+            "hit_rate@10": 0.271186,
+            "ndcg@10": 0.085886,
+            "recall@10": 0.09537,
+            "coverage@10": 0.314286,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.09537,
+              "ci_low": 0.08432,
+              "ci_high": 0.106908,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.085886,
+              "ci_low": 0.075407,
+              "ci_high": 0.096549,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.271186,
+              "ci_low": 0.242585,
+              "ci_high": 0.300847,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 2251,
+          "fit": {
+            "train_windows": 2254.0,
+            "label_positions": 55309.0,
+            "first_epoch_loss": 6.35014,
+            "final_epoch_loss": 3.73775,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 11.11,
+          "test": {
+            "hit_rate@10": 0.270127,
+            "ndcg@10": 0.085236,
+            "recall@10": 0.095689,
+            "coverage@10": 0.319577,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.095689,
+              "ci_low": 0.084107,
+              "ci_high": 0.107118,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.085236,
+              "ci_low": 0.074948,
+              "ci_high": 0.095921,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.270127,
+              "ci_low": 0.241499,
+              "ci_high": 0.298729,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        }
+      ],
+      "relative": 0.9973332030186468,
+      "beyond_seed_noise": false
+    },
+    {
+      "rate": 0.75,
+      "train_users": 1876,
+      "metric": "recall@10",
+      "mean": 0.09446833333333333,
+      "std": 0.001288766981782716,
+      "values": [
+        0.093406,
+        0.095902,
+        0.094097
+      ],
+      "runs": [
+        {
+          "train_users": 1876,
+          "fit": {
+            "train_windows": 1879.0,
+            "label_positions": 45983.0,
+            "first_epoch_loss": 6.38505,
+            "final_epoch_loss": 3.82999,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 9.53,
+          "test": {
+            "hit_rate@10": 0.269068,
+            "ndcg@10": 0.083897,
+            "recall@10": 0.093406,
+            "coverage@10": 0.299471,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.093406,
+              "ci_low": 0.082179,
+              "ci_high": 0.104686,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.083897,
+              "ci_low": 0.073758,
+              "ci_high": 0.094248,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.269068,
+              "ci_low": 0.240466,
+              "ci_high": 0.297669,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 1876,
+          "fit": {
+            "train_windows": 1878.0,
+            "label_positions": 45810.0,
+            "first_epoch_loss": 6.40319,
+            "final_epoch_loss": 3.86007,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 9.37,
+          "test": {
+            "hit_rate@10": 0.273305,
+            "ndcg@10": 0.085612,
+            "recall@10": 0.095902,
+            "coverage@10": 0.30582,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.095902,
+              "ci_low": 0.084755,
+              "ci_high": 0.107282,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.085612,
+              "ci_low": 0.0754,
+              "ci_high": 0.09643,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.273305,
+              "ci_low": 0.244703,
+              "ci_high": 0.302966,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 1876,
+          "fit": {
+            "train_windows": 1878.0,
+            "label_positions": 45515.0,
+            "first_epoch_loss": 6.40191,
+            "final_epoch_loss": 3.8218,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 9.48,
+          "test": {
+            "hit_rate@10": 0.273305,
+            "ndcg@10": 0.085999,
+            "recall@10": 0.094097,
+            "coverage@10": 0.306878,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.094097,
+              "ci_low": 0.0827,
+              "ci_high": 0.105591,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.085999,
+              "ci_low": 0.075385,
+              "ci_high": 0.096727,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.273305,
+              "ci_low": 0.244703,
+              "ci_high": 0.302966,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        }
+      ],
+      "relative": 0.9892455477754585,
+      "beyond_seed_noise": false
+    },
+    {
+      "rate": 0.5,
+      "train_users": 1250,
+      "metric": "recall@10",
+      "mean": 0.092721,
+      "std": 0.0012026986322433387,
+      "values": [
+        0.091403,
+        0.093001,
+        0.093759
+      ],
+      "runs": [
+        {
+          "train_users": 1250,
+          "fit": {
+            "train_windows": 1253.0,
+            "label_positions": 30318.0,
+            "first_epoch_loss": 6.47539,
+            "final_epoch_loss": 4.21439,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 6.45,
+          "test": {
+            "hit_rate@10": 0.274364,
+            "ndcg@10": 0.084214,
+            "recall@10": 0.091403,
+            "coverage@10": 0.291005,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.091403,
+              "ci_low": 0.080588,
+              "ci_high": 0.102883,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.084214,
+              "ci_low": 0.074003,
+              "ci_high": 0.09494,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.274364,
+              "ci_low": 0.245763,
+              "ci_high": 0.304025,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 1250,
+          "fit": {
+            "train_windows": 1252.0,
+            "label_positions": 30459.0,
+            "first_epoch_loss": 6.47397,
+            "final_epoch_loss": 4.20583,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 6.28,
+          "test": {
+            "hit_rate@10": 0.272246,
+            "ndcg@10": 0.084475,
+            "recall@10": 0.093001,
+            "coverage@10": 0.293122,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.093001,
+              "ci_low": 0.081812,
+              "ci_high": 0.104477,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.084475,
+              "ci_low": 0.074032,
+              "ci_high": 0.095136,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.272246,
+              "ci_low": 0.243618,
+              "ci_high": 0.301907,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 1250,
+          "fit": {
+            "train_windows": 1252.0,
+            "label_positions": 31103.0,
+            "first_epoch_loss": 6.46952,
+            "final_epoch_loss": 4.15486,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 6.04,
+          "test": {
+            "hit_rate@10": 0.270127,
+            "ndcg@10": 0.084276,
+            "recall@10": 0.093759,
+            "coverage@10": 0.295238,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.093759,
+              "ci_low": 0.082491,
+              "ci_high": 0.104912,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.084276,
+              "ci_low": 0.073658,
+              "ci_high": 0.094965,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.270127,
+              "ci_low": 0.241525,
+              "ci_high": 0.299788,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        }
+      ],
+      "relative": 0.9709479695342879,
+      "beyond_seed_noise": true
+    },
+    {
+      "rate": 0.25,
+      "train_users": 625,
+      "metric": "recall@10",
+      "mean": 0.08104933333333333,
+      "std": 0.0060371285669044115,
+      "values": [
+        0.074238,
+        0.08574,
+        0.08317
+      ],
+      "runs": [
+        {
+          "train_users": 625,
+          "fit": {
+            "train_windows": 625.0,
+            "label_positions": 14964.0,
+            "first_epoch_loss": 6.54355,
+            "final_epoch_loss": 5.26987,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 3.28,
+          "test": {
+            "hit_rate@10": 0.26589,
+            "ndcg@10": 0.067416,
+            "recall@10": 0.074238,
+            "coverage@10": 0.256085,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.074238,
+              "ci_low": 0.064643,
+              "ci_high": 0.083188,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.067416,
+              "ci_low": 0.058678,
+              "ci_high": 0.075775,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.26589,
+              "ci_low": 0.236229,
+              "ci_high": 0.293459,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 625,
+          "fit": {
+            "train_windows": 626.0,
+            "label_positions": 15650.0,
+            "first_epoch_loss": 6.54267,
+            "final_epoch_loss": 5.25806,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 3.3,
+          "test": {
+            "hit_rate@10": 0.28178,
+            "ndcg@10": 0.076441,
+            "recall@10": 0.08574,
+            "coverage@10": 0.268783,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.08574,
+              "ci_low": 0.075828,
+              "ci_high": 0.096121,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.076441,
+              "ci_low": 0.067209,
+              "ci_high": 0.086063,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.28178,
+              "ci_low": 0.253178,
+              "ci_high": 0.310381,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        },
+        {
+          "train_users": 625,
+          "fit": {
+            "train_windows": 626.0,
+            "label_positions": 15569.0,
+            "first_epoch_loss": 6.55191,
+            "final_epoch_loss": 5.29314,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 3.28,
+          "test": {
+            "hit_rate@10": 0.290254,
+            "ndcg@10": 0.071982,
+            "recall@10": 0.08317,
+            "coverage@10": 0.268783,
+            "eval_users": 944.0
+          },
+          "intervals": {
+            "recall@10": {
+              "mean": 0.08317,
+              "ci_low": 0.07303,
+              "ci_high": 0.093263,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "ndcg@10": {
+              "mean": 0.071982,
+              "ci_low": 0.063478,
+              "ci_high": 0.081313,
+              "n": 944,
+              "confidence": 0.95
+            },
+            "hit_rate@10": {
+              "mean": 0.290254,
+              "ci_low": 0.259534,
+              "ci_high": 0.319915,
+              "n": 944,
+              "confidence": 0.95
+            }
+          }
+        }
+      ],
+      "relative": 0.8487255921755339,
+      "beyond_seed_noise": true
+    }
+  ]
+}

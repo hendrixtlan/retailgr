@@ -1,0 +1,63 @@
+{
+  "dry_run": true,
+  "max_delete_share": 0.5,
+  "steps": [
+    {
+      "table": "bronze.interactions",
+      "cutoff": "2026-01-29",
+      "rows_before": 90506,
+      "rows_removed": 41880,
+      "rows_after": 48626,
+      "delete_share": 0.4627,
+      "status": "would prune",
+      "window_days": 45
+    },
+    {
+      "table": "silver.interactions",
+      "cutoff": "2025-02-08",
+      "rows_before": 76963,
+      "rows_removed": 0,
+      "rows_after": 76963,
+      "delete_share": 0.0,
+      "status": "would prune",
+      "window_days": 400
+    },
+    {
+      "table": "gold.sequences_config",
+      "cutoff": "2025-02-08",
+      "users_before": 4394,
+      "users_removed": 0,
+      "users_after": 4394,
+      "delete_share": 0.0,
+      "status": "would prune",
+      "window_days": 400
+    },
+    {
+      "table": "gold.sequences_product",
+      "cutoff": "2025-02-08",
+      "status": "absent",
+      "window_days": 400
+    },
+    {
+      "table": "gold.sequences_sku",
+      "cutoff": "2025-02-08",
+      "status": "absent",
+      "window_days": 400
+    },
+    {
+      "table": "gold.sequences_style_color",
+      "cutoff": "2025-02-08",
+      "status": "absent",
+      "window_days": 400
+    },
+    {
+      "step": "expire_snapshots",
+      "days": 7,
+      "tables": {},
+      "status": "not applicable: parquet rewrites in place"
+    }
+  ],
+  "clock": "data",
+  "refused": null,
+  "seconds": 22.34
+}

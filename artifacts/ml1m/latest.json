@@ -1,0 +1,286 @@
+{
+  "started_at": "2026-09-18T16:16:57+00:00",
+  "dataset": "ml1m",
+  "warehouse_backend": "parquet",
+  "model_configs": [
+    "sasrec_ml1m.yaml",
+    "hstu_ml1m.yaml"
+  ],
+  "pipeline_stats": {
+    "skipped": true
+  },
+  "variants": {
+    "config": {
+      "data": {
+        "variant": "config",
+        "granularity": {
+          "_default": "sku",
+          "apparel": "style_color",
+          "electronics": "product + capacity",
+          "footwear": "style_color",
+          "grocery": "sku",
+          "home": "style_color",
+          "pharmacy": "sku"
+        },
+        "vocab_size": 3662,
+        "distinct_skus": 3706,
+        "compression_vs_sku": 1.012,
+        "tokens_under_5_events": 315,
+        "sparse_token_share": 0.086,
+        "train_users": 5396,
+        "val_users": 527,
+        "test_users": 1175,
+        "cutoff_train_end_unix": 975739315,
+        "cutoff_val_end_unix": 978125906
+      },
+      "vocab_size": 3663,
+      "k_values": [
+        10,
+        50,
+        200
+      ],
+      "k_values_dropped": [],
+      "models": {
+        "popularity": {
+          "type": "popularity",
+          "fit": {
+            "nonzero_tokens": 3606.0,
+            "total_weight": 560953.0
+          },
+          "fit_seconds": 0.06,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.339658,
+              "hit_rate@200": 0.806452,
+              "hit_rate@50": 0.614801,
+              "ndcg@10": 0.106282,
+              "ndcg@200": 0.170659,
+              "ndcg@50": 0.116034,
+              "recall@10": 0.104719,
+              "recall@200": 0.327709,
+              "recall@50": 0.155272,
+              "coverage@10": 0.012285,
+              "coverage@50": 0.032214,
+              "coverage@200": 0.088725,
+              "eval_users": 527.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.339658,
+                "hit_rate@200": 0.806452,
+                "hit_rate@50": 0.614801,
+                "ndcg@10": 0.106282,
+                "ndcg@200": 0.170659,
+                "ndcg@50": 0.116034,
+                "recall@10": 0.104719,
+                "recall@200": 0.327709,
+                "recall@50": 0.155272,
+                "coverage@10": 0.012285,
+                "coverage@50": 0.032214,
+                "coverage@200": 0.088725,
+                "eval_users": 527.0
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.542128,
+              "hit_rate@200": 0.92766,
+              "hit_rate@50": 0.81617,
+              "ndcg@10": 0.185066,
+              "ndcg@200": 0.231011,
+              "ndcg@50": 0.177765,
+              "recall@10": 0.179292,
+              "recall@200": 0.327331,
+              "recall@50": 0.191658,
+              "coverage@10": 0.013104,
+              "coverage@50": 0.034398,
+              "coverage@200": 0.089271,
+              "eval_users": 1175.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.542128,
+                "hit_rate@200": 0.92766,
+                "hit_rate@50": 0.81617,
+                "ndcg@10": 0.185066,
+                "ndcg@200": 0.231011,
+                "ndcg@50": 0.177765,
+                "recall@10": 0.179292,
+                "recall@200": 0.327331,
+                "recall@50": 0.191658,
+                "coverage@10": 0.013104,
+                "coverage@50": 0.034398,
+                "coverage@200": 0.089271,
+                "eval_users": 1175.0
+              }
+            }
+          }
+        },
+        "sasrec_ml1m": {
+          "type": "sasrec",
+          "fit": {
+            "train_windows": 5396.0,
+            "first_epoch_loss": 4.34302,
+            "final_epoch_loss": 2.85081,
+            "epochs": 8.0
+          },
+          "fit_seconds": 678.53,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.351044,
+              "hit_rate@200": 0.772296,
+              "hit_rate@50": 0.567362,
+              "ndcg@10": 0.102323,
+              "ndcg@200": 0.156577,
+              "ndcg@50": 0.111173,
+              "recall@10": 0.108503,
+              "recall@200": 0.308877,
+              "recall@50": 0.15357,
+              "coverage@10": 0.253071,
+              "coverage@50": 0.469287,
+              "coverage@200": 0.653836,
+              "eval_users": 527.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.351044,
+                "hit_rate@200": 0.772296,
+                "hit_rate@50": 0.567362,
+                "ndcg@10": 0.102323,
+                "ndcg@200": 0.156577,
+                "ndcg@50": 0.111173,
+                "recall@10": 0.108503,
+                "recall@200": 0.308877,
+                "recall@50": 0.15357,
+                "coverage@10": 0.253071,
+                "coverage@50": 0.469287,
+                "coverage@200": 0.653836,
+                "eval_users": 527.0
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.53617,
+              "hit_rate@200": 0.908085,
+              "hit_rate@50": 0.777872,
+              "ndcg@10": 0.162146,
+              "ndcg@200": 0.206299,
+              "ndcg@50": 0.15871,
+              "recall@10": 0.159385,
+              "recall@200": 0.306248,
+              "recall@50": 0.180522,
+              "coverage@10": 0.304668,
+              "coverage@50": 0.510238,
+              "coverage@200": 0.680317,
+              "eval_users": 1175.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.53617,
+                "hit_rate@200": 0.908085,
+                "hit_rate@50": 0.777872,
+                "ndcg@10": 0.162146,
+                "ndcg@200": 0.206299,
+                "ndcg@50": 0.15871,
+                "recall@10": 0.159385,
+                "recall@200": 0.306248,
+                "recall@50": 0.180522,
+                "coverage@10": 0.304668,
+                "coverage@50": 0.510238,
+                "coverage@200": 0.680317,
+                "eval_users": 1175.0
+              }
+            }
+          }
+        },
+        "hstu_ml1m": {
+          "type": "hstu",
+          "fit": {
+            "train_windows": 5396.0,
+            "label_positions": 560953.0,
+            "first_epoch_loss": 4.28453,
+            "final_epoch_loss": 2.69929,
+            "epochs": 8.0,
+            "parameters": 277200.0
+          },
+          "fit_seconds": 1061.0,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.354839,
+              "hit_rate@200": 0.747628,
+              "hit_rate@50": 0.56167,
+              "ndcg@10": 0.10183,
+              "ndcg@200": 0.151011,
+              "ndcg@50": 0.110971,
+              "recall@10": 0.108284,
+              "recall@200": 0.28646,
+              "recall@50": 0.153368,
+              "coverage@10": 0.235599,
+              "coverage@50": 0.429702,
+              "coverage@200": 0.627628,
+              "eval_users": 527.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.354839,
+                "hit_rate@200": 0.747628,
+                "hit_rate@50": 0.56167,
+                "ndcg@10": 0.10183,
+                "ndcg@200": 0.151011,
+                "ndcg@50": 0.110971,
+                "recall@10": 0.108284,
+                "recall@200": 0.28646,
+                "recall@50": 0.153368,
+                "coverage@10": 0.235599,
+                "coverage@50": 0.429702,
+                "coverage@200": 0.627628,
+                "eval_users": 527.0
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.559149,
+              "hit_rate@200": 0.886809,
+              "hit_rate@50": 0.765957,
+              "ndcg@10": 0.161688,
+              "ndcg@200": 0.203849,
+              "ndcg@50": 0.158103,
+              "recall@10": 0.160337,
+              "recall@200": 0.299139,
+              "recall@50": 0.176633,
+              "coverage@10": 0.269451,
+              "coverage@50": 0.45864,
+              "coverage@200": 0.636637,
+              "eval_users": 1175.0
+            },
+            "by_category": {
+              "movies": {
+                "hit_rate@10": 0.559149,
+                "hit_rate@200": 0.886809,
+                "hit_rate@50": 0.765957,
+                "ndcg@10": 0.161688,
+                "ndcg@200": 0.203849,
+                "ndcg@50": 0.158103,
+                "recall@10": 0.160337,
+                "recall@200": 0.299139,
+                "recall@50": 0.176633,
+                "coverage@10": 0.269451,
+                "coverage@50": 0.45864,
+                "coverage@200": 0.636637,
+                "eval_users": 1175.0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v33-x86_64-with-glibc2.39"
+  },
+  "duration_seconds": 1850.66
+}

@@ -1,0 +1,4998 @@
+{
+  "started_at": "2026-09-20T14:25:11+00:00",
+  "dataset": "synthetic",
+  "warehouse_backend": "parquet",
+  "model_configs": [
+    "sasrec_small.yaml",
+    "hstu_small.yaml"
+  ],
+  "pipeline_stats": {
+    "bronze": {
+      "bronze.interactions": 90543,
+      "bronze.catalog": 3174
+    },
+    "silver": {
+      "input_events": 90543,
+      "after_dedupe": 90543,
+      "after_catalog_join": 90543,
+      "bot_users_removed": 0,
+      "after_user_filters": 90471,
+      "silver_events": 90471,
+      "silver_items": 3174,
+      "silver_users": 2976
+    }
+  },
+  "variants": {
+    "sku": {
+      "data": {
+        "variant": "sku",
+        "granularity": {
+          "_default": "sku"
+        },
+        "vocab_size": 3033,
+        "distinct_skus": 3081,
+        "compression_vs_sku": 1.016,
+        "tokens_under_5_events": 858,
+        "sparse_token_share": 0.2829,
+        "train_users": 2943,
+        "val_users": 1125,
+        "test_users": 1100,
+        "cutoff_train_end_unix": 1771380870,
+        "cutoff_val_end_unix": 1771901318,
+        "train_purchases": 5383,
+        "purchases_matured": 4935,
+        "purchases_returned": 723,
+        "purchases_immature": 448,
+        "return_rate": 0.1465
+      },
+      "vocab_size": 3034,
+      "k_values": [
+        10,
+        50,
+        200
+      ],
+      "k_values_dropped": [],
+      "confidence": 0.95,
+      "models": {
+        "popularity": {
+          "type": "popularity",
+          "fit": {
+            "nonzero_tokens": 3033.0,
+            "total_weight": 72361.0
+          },
+          "fit_seconds": 0.01,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.236444,
+              "hit_rate@200": 0.758222,
+              "hit_rate@50": 0.536889,
+              "ndcg@10": 0.056467,
+              "ndcg@200": 0.132112,
+              "ndcg@50": 0.091895,
+              "recall@10": 0.070496,
+              "recall@200": 0.32739,
+              "recall@50": 0.167104,
+              "coverage@10": 0.005603,
+              "coverage@50": 0.021424,
+              "coverage@200": 0.074489,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.262931,
+                "hit_rate@200": 0.782328,
+                "hit_rate@50": 0.577586,
+                "ndcg@10": 0.067705,
+                "ndcg@200": 0.143642,
+                "ndcg@50": 0.10536,
+                "recall@10": 0.083973,
+                "recall@200": 0.335871,
+                "recall@50": 0.186299,
+                "coverage@10": 0.005274,
+                "coverage@50": 0.020105,
+                "coverage@200": 0.073171,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.176471,
+                "hit_rate@200": 0.823529,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.043437,
+                "ndcg@200": 0.128075,
+                "ndcg@50": 0.073997,
+                "recall@10": 0.064706,
+                "recall@200": 0.363212,
+                "recall@50": 0.142857,
+                "coverage@10": 0.004285,
+                "coverage@50": 0.018457,
+                "coverage@200": 0.069875,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.207679,
+                "hit_rate@200": 0.734729,
+                "hit_rate@50": 0.497382,
+                "ndcg@10": 0.046659,
+                "ndcg@200": 0.121441,
+                "ndcg@50": 0.080905,
+                "recall@10": 0.058889,
+                "recall@200": 0.317428,
+                "recall@50": 0.152456,
+                "coverage@10": 0.005603,
+                "coverage@50": 0.021424,
+                "coverage@200": 0.074489,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.0,
+                "hit_rate@200": 0.75,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.0,
+                "ndcg@200": 0.076571,
+                "ndcg@50": 0.026996,
+                "recall@10": 0.0,
+                "recall@200": 0.220734,
+                "recall@50": 0.059028,
+                "coverage@10": 0.003296,
+                "coverage@50": 0.017139,
+                "coverage@200": 0.067238,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.328358,
+                "hit_rate@200": 0.776119,
+                "hit_rate@50": 0.61194,
+                "ndcg@10": 0.0692,
+                "ndcg@200": 0.147866,
+                "ndcg@50": 0.10105,
+                "recall@10": 0.082113,
+                "recall@200": 0.351139,
+                "recall@50": 0.172058,
+                "coverage@10": 0.005274,
+                "coverage@50": 0.019446,
+                "coverage@200": 0.070534,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.070496,
+                "ci_low": 0.061145,
+                "ci_high": 0.079808,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.056467,
+                "ci_low": 0.048339,
+                "ci_high": 0.064122,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.236444,
+                "ci_low": 0.211533,
+                "ci_high": 0.260444,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.167104,
+                "ci_low": 0.155167,
+                "ci_high": 0.179133,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.091895,
+                "ci_low": 0.083826,
+                "ci_high": 0.099883,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.536889,
+                "ci_low": 0.506667,
+                "ci_high": 0.567111,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.32739,
+                "ci_low": 0.311759,
+                "ci_high": 0.342946,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.132112,
+                "ci_low": 0.124017,
+                "ci_high": 0.140171,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.758222,
+                "ci_low": 0.732444,
+                "ci_high": 0.783111,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.220909,
+              "hit_rate@200": 0.753636,
+              "hit_rate@50": 0.546364,
+              "ndcg@10": 0.046409,
+              "ndcg@200": 0.125942,
+              "ndcg@50": 0.084681,
+              "recall@10": 0.059118,
+              "recall@200": 0.32606,
+              "recall@50": 0.1659,
+              "coverage@10": 0.005603,
+              "coverage@50": 0.021424,
+              "coverage@200": 0.074819,
+              "eval_users": 1100.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.226667,
+                "hit_rate@200": 0.788889,
+                "hit_rate@50": 0.564444,
+                "ndcg@10": 0.048616,
+                "ndcg@200": 0.130088,
+                "ndcg@50": 0.087946,
+                "recall@10": 0.061602,
+                "recall@200": 0.332672,
+                "recall@50": 0.171217,
+                "coverage@10": 0.005274,
+                "coverage@50": 0.020435,
+                "coverage@200": 0.0735,
+                "eval_users": 450.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.388889,
+                "hit_rate@200": 0.888889,
+                "hit_rate@50": 0.777778,
+                "ndcg@10": 0.070957,
+                "ndcg@200": 0.160918,
+                "ndcg@50": 0.128244,
+                "recall@10": 0.127844,
+                "recall@200": 0.422451,
+                "recall@50": 0.291384,
+                "coverage@10": 0.004614,
+                "coverage@50": 0.018787,
+                "coverage@200": 0.070864,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.216071,
+                "hit_rate@200": 0.728571,
+                "hit_rate@50": 0.526786,
+                "ndcg@10": 0.045071,
+                "ndcg@200": 0.123793,
+                "ndcg@50": 0.082371,
+                "recall@10": 0.05712,
+                "recall@200": 0.32315,
+                "recall@50": 0.160952,
+                "coverage@10": 0.005603,
+                "coverage@50": 0.021424,
+                "coverage@200": 0.074819,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.666667,
+                "ndcg@10": 0.056527,
+                "ndcg@200": 0.120678,
+                "ndcg@50": 0.086544,
+                "recall@10": 0.033333,
+                "recall@200": 0.232828,
+                "recall@50": 0.10404,
+                "coverage@10": 0.003626,
+                "coverage@50": 0.017469,
+                "coverage@200": 0.068556,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.181818,
+                "hit_rate@200": 0.681818,
+                "hit_rate@50": 0.515152,
+                "ndcg@10": 0.035101,
+                "ndcg@200": 0.106848,
+                "ndcg@50": 0.06998,
+                "recall@10": 0.042731,
+                "recall@200": 0.287856,
+                "recall@50": 0.143038,
+                "coverage@10": 0.004944,
+                "coverage@50": 0.018787,
+                "coverage@200": 0.070204,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.059118,
+                "ci_low": 0.05096,
+                "ci_high": 0.067709,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.046409,
+                "ci_low": 0.039558,
+                "ci_high": 0.053484,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.220909,
+                "ci_low": 0.196364,
+                "ci_high": 0.245455,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.1659,
+                "ci_low": 0.15376,
+                "ci_high": 0.177912,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.084681,
+                "ci_low": 0.077423,
+                "ci_high": 0.092197,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.546364,
+                "ci_low": 0.516364,
+                "ci_high": 0.575455,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.32606,
+                "ci_low": 0.310912,
+                "ci_high": 0.341161,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.125942,
+                "ci_low": 0.118537,
+                "ci_high": 0.133663,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.753636,
+                "ci_low": 0.727273,
+                "ci_high": 0.777273,
+                "n": 1100,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "sasrec_small": {
+          "type": "sasrec",
+          "fit": {
+            "train_windows": 3032.0,
+            "first_epoch_loss": 7.53565,
+            "final_epoch_loss": 4.57127,
+            "epochs": 8.0
+          },
+          "fit_seconds": 94.75,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.227556,
+              "hit_rate@200": 0.595556,
+              "hit_rate@50": 0.359111,
+              "ndcg@10": 0.062807,
+              "ndcg@200": 0.132249,
+              "ndcg@50": 0.093879,
+              "recall@10": 0.067168,
+              "recall@200": 0.309278,
+              "recall@50": 0.153864,
+              "coverage@10": 0.087673,
+              "coverage@50": 0.289717,
+              "coverage@200": 0.812788,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.230603,
+                "hit_rate@200": 0.605603,
+                "hit_rate@50": 0.362069,
+                "ndcg@10": 0.061218,
+                "ndcg@200": 0.133514,
+                "ndcg@50": 0.092304,
+                "recall@10": 0.063736,
+                "recall@200": 0.318648,
+                "recall@50": 0.151951,
+                "coverage@10": 0.082399,
+                "coverage@50": 0.279499,
+                "coverage@200": 0.79499,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.352941,
+                "hit_rate@200": 0.529412,
+                "hit_rate@50": 0.411765,
+                "ndcg@10": 0.073914,
+                "ndcg@200": 0.159043,
+                "ndcg@50": 0.112131,
+                "recall@10": 0.088282,
+                "recall@200": 0.366246,
+                "recall@50": 0.189309,
+                "coverage@10": 0.03263,
+                "coverage@50": 0.143705,
+                "coverage@200": 0.469018,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.219895,
+                "hit_rate@200": 0.588133,
+                "hit_rate@50": 0.356021,
+                "ndcg@10": 0.062068,
+                "ndcg@200": 0.128172,
+                "ndcg@50": 0.09197,
+                "recall@10": 0.068625,
+                "recall@200": 0.299818,
+                "recall@50": 0.151992,
+                "coverage@10": 0.079103,
+                "coverage@50": 0.276203,
+                "coverage@200": 0.795649,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 0.5,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.09047,
+                "ndcg@200": 0.188198,
+                "ndcg@50": 0.134208,
+                "recall@10": 0.0625,
+                "recall@200": 0.330357,
+                "recall@50": 0.160714,
+                "coverage@10": 0.010877,
+                "coverage@50": 0.052076,
+                "coverage@200": 0.194463,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.238806,
+                "hit_rate@200": 0.61194,
+                "hit_rate@50": 0.343284,
+                "ndcg@10": 0.075653,
+                "ndcg@200": 0.148221,
+                "ndcg@50": 0.114078,
+                "recall@10": 0.073401,
+                "recall@200": 0.30958,
+                "recall@50": 0.173719,
+                "coverage@10": 0.053065,
+                "coverage@50": 0.228741,
+                "coverage@200": 0.718194,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.067168,
+                "ci_low": 0.058291,
+                "ci_high": 0.076308,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.062807,
+                "ci_low": 0.054719,
+                "ci_high": 0.071055,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.227556,
+                "ci_low": 0.202667,
+                "ci_high": 0.251556,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.153864,
+                "ci_low": 0.138977,
+                "ci_high": 0.167787,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.093879,
+                "ci_low": 0.084275,
+                "ci_high": 0.103499,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.359111,
+                "ci_low": 0.331556,
+                "ci_high": 0.385778,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.309278,
+                "ci_low": 0.289962,
+                "ci_high": 0.328787,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.132249,
+                "ci_low": 0.121532,
+                "ci_high": 0.142921,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.595556,
+                "ci_low": 0.567111,
+                "ci_high": 0.624,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.240909,
+              "hit_rate@200": 0.587273,
+              "hit_rate@50": 0.349091,
+              "ndcg@10": 0.065316,
+              "ndcg@200": 0.130429,
+              "ndcg@50": 0.094935,
+              "recall@10": 0.070354,
+              "recall@200": 0.29259,
+              "recall@50": 0.151181,
+              "coverage@10": 0.088991,
+              "coverage@50": 0.295979,
+              "coverage@200": 0.804219,
+              "eval_users": 1100.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.253333,
+                "hit_rate@200": 0.622222,
+                "hit_rate@50": 0.364444,
+                "ndcg@10": 0.066402,
+                "ndcg@200": 0.13662,
+                "ndcg@50": 0.098627,
+                "recall@10": 0.074008,
+                "recall@200": 0.311136,
+                "recall@50": 0.160396,
+                "coverage@10": 0.081411,
+                "coverage@50": 0.283125,
+                "coverage@200": 0.787739,
+                "eval_users": 450.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.5,
+                "hit_rate@50": 0.277778,
+                "ndcg@10": 0.055634,
+                "ndcg@200": 0.123473,
+                "ndcg@50": 0.076665,
+                "recall@10": 0.052381,
+                "recall@200": 0.295605,
+                "recall@50": 0.113035,
+                "coverage@10": 0.032301,
+                "coverage@50": 0.143045,
+                "coverage@200": 0.464403,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.230357,
+                "hit_rate@200": 0.553571,
+                "hit_rate@50": 0.341071,
+                "ndcg@10": 0.063148,
+                "ndcg@200": 0.123474,
+                "ndcg@50": 0.091606,
+                "recall@10": 0.066091,
+                "recall@200": 0.273535,
+                "recall@50": 0.145371,
+                "coverage@10": 0.081411,
+                "coverage@50": 0.279499,
+                "coverage@200": 0.793672,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.107471,
+                "ndcg@200": 0.201846,
+                "ndcg@50": 0.15086,
+                "recall@10": 0.083333,
+                "recall@200": 0.409596,
+                "recall@50": 0.2,
+                "coverage@10": 0.017469,
+                "coverage@50": 0.084377,
+                "coverage@200": 0.301252,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.257576,
+                "hit_rate@200": 0.636364,
+                "hit_rate@50": 0.318182,
+                "ndcg@10": 0.075119,
+                "ndcg@200": 0.142626,
+                "ndcg@50": 0.097917,
+                "recall@10": 0.085329,
+                "recall@200": 0.316356,
+                "recall@50": 0.143616,
+                "coverage@10": 0.052076,
+                "coverage@50": 0.22149,
+                "coverage@200": 0.69644,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.070354,
+                "ci_low": 0.062428,
+                "ci_high": 0.079053,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.065316,
+                "ci_low": 0.057954,
+                "ci_high": 0.073322,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.240909,
+                "ci_low": 0.216341,
+                "ci_high": 0.266364,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.151181,
+                "ci_low": 0.137215,
+                "ci_high": 0.164922,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.094935,
+                "ci_low": 0.085994,
+                "ci_high": 0.104709,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.349091,
+                "ci_low": 0.321818,
+                "ci_high": 0.376386,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.29259,
+                "ci_low": 0.274365,
+                "ci_high": 0.310769,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.130429,
+                "ci_low": 0.12045,
+                "ci_high": 0.140945,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.587273,
+                "ci_low": 0.558182,
+                "ci_high": 0.615455,
+                "n": 1100,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "hstu_small": {
+          "type": "hstu",
+          "fit": {
+            "train_windows": 2946.0,
+            "label_positions": 71674.0,
+            "first_epoch_loss": 7.43791,
+            "final_epoch_loss": 4.46271,
+            "epochs": 8.0,
+            "parameters": 236644.0
+          },
+          "fit_seconds": 37.44,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.228444,
+              "hit_rate@200": 0.556444,
+              "hit_rate@50": 0.336,
+              "ndcg@10": 0.062757,
+              "ndcg@200": 0.126627,
+              "ndcg@50": 0.091553,
+              "recall@10": 0.069448,
+              "recall@200": 0.28973,
+              "recall@50": 0.147473,
+              "coverage@10": 0.091299,
+              "coverage@50": 0.298945,
+              "coverage@200": 0.86025,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.232759,
+                "hit_rate@200": 0.553879,
+                "hit_rate@50": 0.336207,
+                "ndcg@10": 0.060685,
+                "ndcg@200": 0.125268,
+                "ndcg@50": 0.088236,
+                "recall@10": 0.066737,
+                "recall@200": 0.290625,
+                "recall@50": 0.140799,
+                "coverage@10": 0.082399,
+                "coverage@50": 0.279499,
+                "coverage@200": 0.832235,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.294118,
+                "hit_rate@200": 0.529412,
+                "hit_rate@50": 0.411765,
+                "ndcg@10": 0.065197,
+                "ndcg@200": 0.15559,
+                "ndcg@50": 0.11615,
+                "recall@10": 0.073343,
+                "recall@200": 0.355042,
+                "recall@50": 0.204015,
+                "coverage@10": 0.031312,
+                "coverage@50": 0.145353,
+                "coverage@200": 0.512195,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.219895,
+                "hit_rate@200": 0.553229,
+                "hit_rate@50": 0.333333,
+                "ndcg@10": 0.061499,
+                "ndcg@200": 0.122919,
+                "ndcg@50": 0.09015,
+                "recall@10": 0.069354,
+                "recall@200": 0.282194,
+                "recall@50": 0.148691,
+                "coverage@10": 0.082729,
+                "coverage@50": 0.284443,
+                "coverage@200": 0.849044,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 0.5,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.085761,
+                "ndcg@200": 0.184205,
+                "ndcg@50": 0.131727,
+                "recall@10": 0.0625,
+                "recall@200": 0.330357,
+                "recall@50": 0.160714,
+                "coverage@10": 0.010877,
+                "coverage@50": 0.052406,
+                "coverage@200": 0.200396,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.253731,
+                "hit_rate@200": 0.61194,
+                "hit_rate@50": 0.328358,
+                "ndcg@10": 0.08588,
+                "ndcg@200": 0.156974,
+                "ndcg@50": 0.117882,
+                "recall@10": 0.088451,
+                "recall@200": 0.328988,
+                "recall@50": 0.16814,
+                "coverage@10": 0.054384,
+                "coverage@50": 0.229071,
+                "coverage@200": 0.750824,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.069448,
+                "ci_low": 0.060599,
+                "ci_high": 0.078841,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.062757,
+                "ci_low": 0.054744,
+                "ci_high": 0.071204,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.228444,
+                "ci_low": 0.204444,
+                "ci_high": 0.254222,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.147473,
+                "ci_low": 0.133183,
+                "ci_high": 0.161443,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.091553,
+                "ci_low": 0.082225,
+                "ci_high": 0.101123,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.336,
+                "ci_low": 0.308444,
+                "ci_high": 0.362667,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.28973,
+                "ci_low": 0.269938,
+                "ci_high": 0.309487,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.126627,
+                "ci_low": 0.116224,
+                "ci_high": 0.137139,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.556444,
+                "ci_low": 0.527978,
+                "ci_high": 0.584,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.234545,
+              "hit_rate@200": 0.546364,
+              "hit_rate@50": 0.333636,
+              "ndcg@10": 0.063585,
+              "ndcg@200": 0.126758,
+              "ndcg@50": 0.092254,
+              "recall@10": 0.067337,
+              "recall@200": 0.282792,
+              "recall@50": 0.144054,
+              "coverage@10": 0.094595,
+              "coverage@50": 0.304219,
+              "coverage@200": 0.858273,
+              "eval_users": 1100.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.24,
+                "hit_rate@200": 0.56,
+                "hit_rate@50": 0.355556,
+                "ndcg@10": 0.064059,
+                "ndcg@200": 0.13106,
+                "ndcg@50": 0.096174,
+                "recall@10": 0.068994,
+                "recall@200": 0.293,
+                "recall@50": 0.154341,
+                "coverage@10": 0.086025,
+                "coverage@50": 0.284113,
+                "coverage@200": 0.847396,
+                "eval_users": 450.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.555556,
+                "hit_rate@50": 0.333333,
+                "ndcg@10": 0.058735,
+                "ndcg@200": 0.140253,
+                "ndcg@50": 0.080484,
+                "recall@10": 0.052381,
+                "recall@200": 0.367274,
+                "recall@50": 0.117665,
+                "coverage@10": 0.032301,
+                "coverage@50": 0.147001,
+                "coverage@200": 0.479565,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.232143,
+                "hit_rate@200": 0.526786,
+                "hit_rate@50": 0.316071,
+                "ndcg@10": 0.062321,
+                "ndcg@200": 0.120763,
+                "ndcg@50": 0.088481,
+                "recall@10": 0.066059,
+                "recall@200": 0.267262,
+                "recall@50": 0.136587,
+                "coverage@10": 0.085366,
+                "coverage@50": 0.285102,
+                "coverage@200": 0.833883,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.103975,
+                "ndcg@200": 0.192424,
+                "ndcg@50": 0.148158,
+                "recall@10": 0.083333,
+                "recall@200": 0.384343,
+                "recall@50": 0.222222,
+                "coverage@10": 0.018128,
+                "coverage@50": 0.085695,
+                "coverage@200": 0.320699,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.227273,
+                "hit_rate@200": 0.590909,
+                "hit_rate@50": 0.318182,
+                "ndcg@10": 0.068728,
+                "ndcg@200": 0.138653,
+                "ndcg@50": 0.095666,
+                "recall@10": 0.069505,
+                "recall@200": 0.312687,
+                "recall@50": 0.137363,
+                "coverage@10": 0.053395,
+                "coverage@50": 0.220501,
+                "coverage@200": 0.758734,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.067337,
+                "ci_low": 0.059761,
+                "ci_high": 0.075938,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.063585,
+                "ci_low": 0.056377,
+                "ci_high": 0.0714,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.234545,
+                "ci_low": 0.21,
+                "ci_high": 0.259091,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.144054,
+                "ci_low": 0.130627,
+                "ci_high": 0.157856,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.092254,
+                "ci_low": 0.083356,
+                "ci_high": 0.101754,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.333636,
+                "ci_low": 0.307273,
+                "ci_high": 0.361818,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.282792,
+                "ci_low": 0.264285,
+                "ci_high": 0.301061,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.126758,
+                "ci_low": 0.11692,
+                "ci_high": 0.137077,
+                "n": 1100,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.546364,
+                "ci_low": 0.51725,
+                "ci_high": 0.574545,
+                "n": 1100,
+                "confidence": 0.95
+              }
+            }
+          }
+        }
+      },
+      "reference_model": "sasrec_small",
+      "comparisons": {
+        "popularity": {
+          "recall@10": {
+            "mean_a": 0.059118,
+            "mean_b": 0.070354,
+            "mean_difference": -0.011236,
+            "ci_low": -0.024073,
+            "ci_high": 0.000851,
+            "relative_difference": -0.1597,
+            "p_value": 0.09045,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.046409,
+            "mean_b": 0.065316,
+            "mean_difference": -0.018907,
+            "ci_low": -0.029441,
+            "ci_high": -0.008097,
+            "relative_difference": -0.28947,
+            "p_value": 0.001,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.220909,
+            "mean_b": 0.240909,
+            "mean_difference": -0.02,
+            "ci_low": -0.056364,
+            "ci_high": 0.013636,
+            "relative_difference": -0.08302,
+            "p_value": 0.31484,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.1659,
+            "mean_b": 0.151181,
+            "mean_difference": 0.014719,
+            "ci_low": -0.004345,
+            "ci_high": 0.033633,
+            "relative_difference": 0.09736,
+            "p_value": 0.15392,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.084681,
+            "mean_b": 0.094935,
+            "mean_difference": -0.010254,
+            "ci_low": -0.022328,
+            "ci_high": 0.001841,
+            "relative_difference": -0.10801,
+            "p_value": 0.11894,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.546364,
+            "mean_b": 0.349091,
+            "mean_difference": 0.197273,
+            "ci_low": 0.158182,
+            "ci_high": 0.235455,
+            "relative_difference": 0.5651,
+            "p_value": 0.0005,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.32606,
+            "mean_b": 0.29259,
+            "mean_difference": 0.03347,
+            "ci_low": 0.011557,
+            "ci_high": 0.056362,
+            "relative_difference": 0.11439,
+            "p_value": 0.003,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.125942,
+            "mean_b": 0.130429,
+            "mean_difference": -0.004487,
+            "ci_low": -0.016563,
+            "ci_high": 0.007576,
+            "relative_difference": -0.0344,
+            "p_value": 0.49925,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.753636,
+            "mean_b": 0.587273,
+            "mean_difference": 0.166364,
+            "ci_low": 0.135455,
+            "ci_high": 0.198182,
+            "relative_difference": 0.28328,
+            "p_value": 0.0005,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          }
+        },
+        "hstu_small": {
+          "recall@10": {
+            "mean_a": 0.067337,
+            "mean_b": 0.070354,
+            "mean_difference": -0.003017,
+            "ci_low": -0.007273,
+            "ci_high": 0.000667,
+            "relative_difference": -0.04288,
+            "p_value": 0.13093,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.063585,
+            "mean_b": 0.065316,
+            "mean_difference": -0.001731,
+            "ci_low": -0.004463,
+            "ci_high": 0.000766,
+            "relative_difference": -0.02651,
+            "p_value": 0.21289,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.234545,
+            "mean_b": 0.240909,
+            "mean_difference": -0.006364,
+            "ci_low": -0.016364,
+            "ci_high": 0.002727,
+            "relative_difference": -0.02642,
+            "p_value": 0.26937,
+            "n": 1100,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.144054,
+            "mean_b": 0.151181,
+            "mean_difference": -0.007127,
+            "ci_low": -0.012068,
+            "ci_high": -0.002368,
+            "relative_difference": -0.04714,
+            "p_value": 0.0055,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.092254,
+            "mean_b": 0.094935,
+            "mean_difference": -0.002682,
+            "ci_low": -0.005129,
+            "ci_high": -0.00018,
+            "relative_difference": -0.02825,
+            "p_value": 0.03248,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.333636,
+            "mean_b": 0.349091,
+            "mean_difference": -0.015455,
+            "ci_low": -0.027273,
+            "ci_high": -0.003636,
+            "relative_difference": -0.04427,
+            "p_value": 0.01599,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.282792,
+            "mean_b": 0.29259,
+            "mean_difference": -0.009798,
+            "ci_low": -0.02012,
+            "ci_high": -0.000518,
+            "relative_difference": -0.03349,
+            "p_value": 0.06697,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.126758,
+            "mean_b": 0.130429,
+            "mean_difference": -0.00367,
+            "ci_low": -0.006647,
+            "ci_high": -0.000732,
+            "relative_difference": -0.02814,
+            "p_value": 0.02049,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.546364,
+            "mean_b": 0.587273,
+            "mean_difference": -0.040909,
+            "ci_low": -0.065455,
+            "ci_high": -0.016364,
+            "relative_difference": -0.06966,
+            "p_value": 0.002,
+            "n": 1100,
+            "significant": true,
+            "confidence": 0.95
+          }
+        }
+      }
+    },
+    "style_color": {
+      "data": {
+        "variant": "style_color",
+        "granularity": {
+          "_default": "style_color"
+        },
+        "vocab_size": 809,
+        "distinct_skus": 3081,
+        "compression_vs_sku": 3.808,
+        "tokens_under_5_events": 16,
+        "sparse_token_share": 0.0198,
+        "train_users": 2943,
+        "val_users": 1125,
+        "test_users": 1101,
+        "cutoff_train_end_unix": 1771380870,
+        "cutoff_val_end_unix": 1771901318,
+        "train_purchases": 5383,
+        "purchases_matured": 4935,
+        "purchases_returned": 723,
+        "purchases_immature": 448,
+        "return_rate": 0.1465
+      },
+      "vocab_size": 810,
+      "k_values": [
+        10,
+        50,
+        200
+      ],
+      "k_values_dropped": [],
+      "confidence": 0.95,
+      "models": {
+        "popularity": {
+          "type": "popularity",
+          "fit": {
+            "nonzero_tokens": 809.0,
+            "total_weight": 72361.0
+          },
+          "fit_seconds": 0.01,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.255111,
+              "hit_rate@200": 0.813333,
+              "hit_rate@50": 0.583111,
+              "ndcg@10": 0.060051,
+              "ndcg@200": 0.163186,
+              "ndcg@50": 0.105141,
+              "recall@10": 0.077613,
+              "recall@200": 0.432056,
+              "recall@50": 0.202822,
+              "coverage@10": 0.022222,
+              "coverage@50": 0.079012,
+              "coverage@200": 0.280247,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.280172,
+                "hit_rate@200": 0.849138,
+                "hit_rate@50": 0.622845,
+                "ndcg@10": 0.07079,
+                "ndcg@200": 0.177453,
+                "ndcg@50": 0.117627,
+                "recall@10": 0.090003,
+                "recall@200": 0.456144,
+                "recall@50": 0.220731,
+                "coverage@10": 0.019753,
+                "coverage@50": 0.079012,
+                "coverage@200": 0.280247,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.235294,
+                "hit_rate@200": 0.764706,
+                "hit_rate@50": 0.647059,
+                "ndcg@10": 0.05422,
+                "ndcg@200": 0.156954,
+                "ndcg@50": 0.10026,
+                "recall@10": 0.084314,
+                "recall@200": 0.451362,
+                "recall@50": 0.218328,
+                "coverage@10": 0.016049,
+                "coverage@50": 0.069136,
+                "coverage@200": 0.264198,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.226876,
+                "hit_rate@200": 0.780105,
+                "hit_rate@50": 0.546248,
+                "ndcg@10": 0.050475,
+                "ndcg@200": 0.149561,
+                "ndcg@50": 0.094214,
+                "recall@10": 0.066593,
+                "recall@200": 0.407107,
+                "recall@50": 0.186354,
+                "coverage@10": 0.022222,
+                "coverage@50": 0.076543,
+                "coverage@200": 0.276543,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.0,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 1.0,
+                "ndcg@10": 0.0,
+                "ndcg@200": 0.156897,
+                "ndcg@50": 0.063696,
+                "recall@10": 0.0,
+                "recall@200": 0.52381,
+                "recall@50": 0.181548,
+                "coverage@10": 0.012346,
+                "coverage@50": 0.064198,
+                "coverage@200": 0.253086,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.343284,
+                "hit_rate@200": 0.850746,
+                "hit_rate@50": 0.58209,
+                "ndcg@10": 0.07263,
+                "ndcg@200": 0.18286,
+                "ndcg@50": 0.115839,
+                "recall@10": 0.088984,
+                "recall@200": 0.46822,
+                "recall@50": 0.216964,
+                "coverage@10": 0.019753,
+                "coverage@50": 0.071605,
+                "coverage@200": 0.266667,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.077613,
+                "ci_low": 0.067956,
+                "ci_high": 0.086845,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.060051,
+                "ci_low": 0.051975,
+                "ci_high": 0.06766,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.255111,
+                "ci_low": 0.229333,
+                "ci_high": 0.28,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.202822,
+                "ci_low": 0.189975,
+                "ci_high": 0.216088,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.105141,
+                "ci_low": 0.096671,
+                "ci_high": 0.113626,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.583111,
+                "ci_low": 0.553778,
+                "ci_high": 0.611556,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.432056,
+                "ci_low": 0.414228,
+                "ci_high": 0.450614,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.163186,
+                "ci_low": 0.154641,
+                "ci_high": 0.171503,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.813333,
+                "ci_low": 0.790222,
+                "ci_high": 0.836444,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.224342,
+              "hit_rate@200": 0.789282,
+              "hit_rate@50": 0.582198,
+              "ndcg@10": 0.048049,
+              "ndcg@200": 0.15409,
+              "ndcg@50": 0.097694,
+              "recall@10": 0.062327,
+              "recall@200": 0.420124,
+              "recall@50": 0.202097,
+              "coverage@10": 0.023457,
+              "coverage@50": 0.079012,
+              "coverage@200": 0.280247,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.239468,
+                "hit_rate@200": 0.824834,
+                "hit_rate@50": 0.578714,
+                "ndcg@10": 0.0515,
+                "ndcg@200": 0.157753,
+                "ndcg@50": 0.099954,
+                "recall@10": 0.066688,
+                "recall@200": 0.421561,
+                "recall@50": 0.201414,
+                "coverage@10": 0.020988,
+                "coverage@50": 0.077778,
+                "coverage@200": 0.280247,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.388889,
+                "hit_rate@200": 0.944444,
+                "hit_rate@50": 0.833333,
+                "ndcg@10": 0.075554,
+                "ndcg@200": 0.20504,
+                "ndcg@50": 0.136314,
+                "recall@10": 0.13578,
+                "recall@200": 0.585305,
+                "recall@50": 0.311688,
+                "coverage@10": 0.017284,
+                "coverage@50": 0.07037,
+                "coverage@200": 0.267901,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.207143,
+                "hit_rate@200": 0.764286,
+                "hit_rate@50": 0.5875,
+                "ndcg@10": 0.045427,
+                "ndcg@200": 0.152464,
+                "ndcg@50": 0.096831,
+                "recall@10": 0.058087,
+                "recall@200": 0.420621,
+                "recall@50": 0.203531,
+                "coverage@10": 0.023457,
+                "coverage@50": 0.079012,
+                "coverage@200": 0.279012,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.056527,
+                "ndcg@200": 0.153539,
+                "ndcg@50": 0.085705,
+                "recall@10": 0.033333,
+                "recall@200": 0.362393,
+                "recall@50": 0.116667,
+                "coverage@10": 0.01358,
+                "coverage@50": 0.066667,
+                "coverage@200": 0.259259,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.227273,
+                "hit_rate@200": 0.712121,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.038443,
+                "ndcg@200": 0.129014,
+                "ndcg@50": 0.080122,
+                "recall@10": 0.051106,
+                "recall@200": 0.366295,
+                "recall@50": 0.172481,
+                "coverage@10": 0.019753,
+                "coverage@50": 0.071605,
+                "coverage@200": 0.265432,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.062327,
+                "ci_low": 0.054115,
+                "ci_high": 0.070897,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.048049,
+                "ci_low": 0.041068,
+                "ci_high": 0.055075,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.224342,
+                "ci_low": 0.199818,
+                "ci_high": 0.249796,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.202097,
+                "ci_low": 0.188322,
+                "ci_high": 0.215855,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.097694,
+                "ci_low": 0.090159,
+                "ci_high": 0.105255,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.582198,
+                "ci_low": 0.552225,
+                "ci_high": 0.608538,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.420124,
+                "ci_low": 0.402366,
+                "ci_high": 0.437179,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.15409,
+                "ci_low": 0.145937,
+                "ci_high": 0.161972,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.789282,
+                "ci_low": 0.764759,
+                "ci_high": 0.812897,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "sasrec_small": {
+          "type": "sasrec",
+          "fit": {
+            "train_windows": 3032.0,
+            "first_epoch_loss": 6.22865,
+            "final_epoch_loss": 3.72484,
+            "epochs": 8.0
+          },
+          "fit_seconds": 17.77,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.279111,
+              "hit_rate@200": 0.756444,
+              "hit_rate@50": 0.420444,
+              "ndcg@10": 0.086437,
+              "ndcg@200": 0.187177,
+              "ndcg@50": 0.135124,
+              "recall@10": 0.094834,
+              "recall@200": 0.436671,
+              "recall@50": 0.229555,
+              "coverage@10": 0.387654,
+              "coverage@50": 0.925926,
+              "coverage@200": 0.998765,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.284483,
+                "hit_rate@200": 0.760776,
+                "hit_rate@50": 0.426724,
+                "ndcg@10": 0.088637,
+                "ndcg@200": 0.192741,
+                "ndcg@50": 0.138335,
+                "recall@10": 0.095245,
+                "recall@200": 0.451244,
+                "recall@50": 0.232674,
+                "coverage@10": 0.355556,
+                "coverage@50": 0.897531,
+                "coverage@200": 0.998765,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.294118,
+                "hit_rate@200": 0.764706,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.091831,
+                "ndcg@200": 0.213473,
+                "ndcg@50": 0.162003,
+                "recall@10": 0.104202,
+                "recall@200": 0.499873,
+                "recall@50": 0.288197,
+                "coverage@10": 0.128395,
+                "coverage@50": 0.506173,
+                "coverage@200": 0.902469,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.273997,
+                "hit_rate@200": 0.748691,
+                "hit_rate@50": 0.420593,
+                "ndcg@10": 0.082893,
+                "ndcg@200": 0.179865,
+                "ndcg@50": 0.129767,
+                "recall@10": 0.092473,
+                "recall@200": 0.421035,
+                "recall@50": 0.224217,
+                "coverage@10": 0.354321,
+                "coverage@50": 0.906173,
+                "coverage@200": 0.998765,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.083501,
+                "ndcg@200": 0.303057,
+                "ndcg@50": 0.188133,
+                "recall@10": 0.09375,
+                "recall@200": 0.787202,
+                "recall@50": 0.330357,
+                "coverage@10": 0.044444,
+                "coverage@50": 0.193827,
+                "coverage@200": 0.559259,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.283582,
+                "hit_rate@200": 0.776119,
+                "hit_rate@50": 0.358209,
+                "ndcg@10": 0.100316,
+                "ndcg@200": 0.197594,
+                "ndcg@50": 0.148709,
+                "recall@10": 0.109861,
+                "recall@200": 0.432513,
+                "recall@50": 0.232711,
+                "coverage@10": 0.216049,
+                "coverage@50": 0.812346,
+                "coverage@200": 0.998765,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.094834,
+                "ci_low": 0.084408,
+                "ci_high": 0.105254,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.086437,
+                "ci_low": 0.076619,
+                "ci_high": 0.095745,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.279111,
+                "ci_low": 0.253333,
+                "ci_high": 0.304889,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.229555,
+                "ci_low": 0.210299,
+                "ci_high": 0.24784,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.135124,
+                "ci_low": 0.123003,
+                "ci_high": 0.147059,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.420444,
+                "ci_low": 0.391978,
+                "ci_high": 0.448889,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.436671,
+                "ci_low": 0.417062,
+                "ci_high": 0.455833,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.187177,
+                "ci_low": 0.175714,
+                "ci_high": 0.198031,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.756444,
+                "ci_low": 0.730667,
+                "ci_high": 0.781333,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.276113,
+              "hit_rate@200": 0.742961,
+              "hit_rate@50": 0.409628,
+              "ndcg@10": 0.084772,
+              "ndcg@200": 0.181269,
+              "ndcg@50": 0.129284,
+              "recall@10": 0.092894,
+              "recall@200": 0.421816,
+              "recall@50": 0.215417,
+              "coverage@10": 0.392593,
+              "coverage@50": 0.920988,
+              "coverage@200": 0.998765,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.292683,
+                "hit_rate@200": 0.769401,
+                "hit_rate@50": 0.432373,
+                "ndcg@10": 0.087973,
+                "ndcg@200": 0.187506,
+                "ndcg@50": 0.13373,
+                "recall@10": 0.096831,
+                "recall@200": 0.429598,
+                "recall@50": 0.220484,
+                "coverage@10": 0.358025,
+                "coverage@50": 0.908642,
+                "coverage@200": 0.998765,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.777778,
+                "hit_rate@50": 0.333333,
+                "ndcg@10": 0.082278,
+                "ndcg@200": 0.188017,
+                "ndcg@50": 0.124433,
+                "recall@10": 0.117196,
+                "recall@200": 0.5057,
+                "recall@50": 0.234271,
+                "coverage@10": 0.120988,
+                "coverage@50": 0.51358,
+                "coverage@200": 0.895062,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.258929,
+                "hit_rate@200": 0.710714,
+                "hit_rate@50": 0.3875,
+                "ndcg@10": 0.082254,
+                "ndcg@200": 0.174441,
+                "ndcg@50": 0.12415,
+                "recall@10": 0.089525,
+                "recall@200": 0.409446,
+                "recall@50": 0.207202,
+                "coverage@10": 0.360494,
+                "coverage@50": 0.903704,
+                "coverage@200": 0.998765,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.082977,
+                "ndcg@200": 0.208704,
+                "ndcg@50": 0.170834,
+                "recall@10": 0.083333,
+                "recall@200": 0.485043,
+                "recall@50": 0.333333,
+                "coverage@10": 0.066667,
+                "coverage@50": 0.317284,
+                "coverage@200": 0.762963,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.30303,
+                "hit_rate@200": 0.818182,
+                "hit_rate@50": 0.454545,
+                "ndcg@10": 0.085109,
+                "ndcg@200": 0.192255,
+                "ndcg@50": 0.140014,
+                "recall@10": 0.088823,
+                "recall@200": 0.444969,
+                "recall@50": 0.234627,
+                "coverage@10": 0.209877,
+                "coverage@50": 0.792593,
+                "coverage@200": 0.988889,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.092894,
+                "ci_low": 0.082224,
+                "ci_high": 0.103299,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.084772,
+                "ci_low": 0.075098,
+                "ci_high": 0.094219,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.276113,
+                "ci_low": 0.248865,
+                "ci_high": 0.302475,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.215417,
+                "ci_low": 0.197425,
+                "ci_high": 0.233955,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.129284,
+                "ci_low": 0.117247,
+                "ci_high": 0.141511,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.409628,
+                "ci_low": 0.380563,
+                "ci_high": 0.438692,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.421816,
+                "ci_low": 0.402251,
+                "ci_high": 0.440058,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.181269,
+                "ci_low": 0.170113,
+                "ci_high": 0.192371,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.742961,
+                "ci_low": 0.716621,
+                "ci_high": 0.768392,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "hstu_small": {
+          "type": "hstu",
+          "fit": {
+            "train_windows": 2946.0,
+            "label_positions": 71674.0,
+            "first_epoch_loss": 6.11623,
+            "final_epoch_loss": 3.60677,
+            "epochs": 8.0,
+            "parameters": 94308.0
+          },
+          "fit_seconds": 21.3,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.286222,
+              "hit_rate@200": 0.751111,
+              "hit_rate@50": 0.404444,
+              "ndcg@10": 0.087742,
+              "ndcg@200": 0.184111,
+              "ndcg@50": 0.134116,
+              "recall@10": 0.097949,
+              "recall@200": 0.424324,
+              "recall@50": 0.22523,
+              "coverage@10": 0.396296,
+              "coverage@50": 0.941975,
+              "coverage@200": 0.998765,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.297414,
+                "hit_rate@200": 0.767241,
+                "hit_rate@50": 0.422414,
+                "ndcg@10": 0.09046,
+                "ndcg@200": 0.1885,
+                "ndcg@50": 0.137912,
+                "recall@10": 0.097636,
+                "recall@200": 0.430775,
+                "recall@50": 0.229467,
+                "coverage@10": 0.365432,
+                "coverage@50": 0.925926,
+                "coverage@200": 0.998765,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.294118,
+                "hit_rate@200": 0.823529,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.085842,
+                "ndcg@200": 0.202013,
+                "ndcg@50": 0.156911,
+                "recall@10": 0.098319,
+                "recall@200": 0.472116,
+                "recall@50": 0.288197,
+                "coverage@10": 0.124691,
+                "coverage@50": 0.52716,
+                "coverage@200": 0.923457,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.277487,
+                "hit_rate@200": 0.729494,
+                "hit_rate@50": 0.38918,
+                "ndcg@10": 0.082493,
+                "ndcg@200": 0.175989,
+                "ndcg@50": 0.126862,
+                "recall@10": 0.095588,
+                "recall@200": 0.413861,
+                "recall@50": 0.217493,
+                "coverage@10": 0.358025,
+                "coverage@50": 0.928395,
+                "coverage@200": 0.998765,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.106839,
+                "ndcg@200": 0.28093,
+                "ndcg@50": 0.211297,
+                "recall@10": 0.09375,
+                "recall@200": 0.622024,
+                "recall@50": 0.330357,
+                "coverage@10": 0.04321,
+                "coverage@50": 0.192593,
+                "coverage@200": 0.595062,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.283582,
+                "hit_rate@200": 0.791045,
+                "hit_rate@50": 0.38806,
+                "ndcg@10": 0.113148,
+                "ndcg@200": 0.212853,
+                "ndcg@50": 0.159476,
+                "recall@10": 0.120469,
+                "recall@200": 0.445196,
+                "recall@50": 0.239801,
+                "coverage@10": 0.223457,
+                "coverage@50": 0.832099,
+                "coverage@200": 0.998765,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.097949,
+                "ci_low": 0.087174,
+                "ci_high": 0.108643,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.087742,
+                "ci_low": 0.077865,
+                "ci_high": 0.097478,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.286222,
+                "ci_low": 0.261333,
+                "ci_high": 0.312022,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.22523,
+                "ci_low": 0.205986,
+                "ci_high": 0.243429,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.134116,
+                "ci_low": 0.121896,
+                "ci_high": 0.14569,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.404444,
+                "ci_low": 0.376889,
+                "ci_high": 0.432,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.424324,
+                "ci_low": 0.405004,
+                "ci_high": 0.442665,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.184111,
+                "ci_low": 0.172323,
+                "ci_high": 0.195182,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.751111,
+                "ci_low": 0.727111,
+                "ci_high": 0.776,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.267938,
+              "hit_rate@200": 0.746594,
+              "hit_rate@50": 0.387829,
+              "ndcg@10": 0.084424,
+              "ndcg@200": 0.179884,
+              "ndcg@50": 0.127918,
+              "recall@10": 0.091724,
+              "recall@200": 0.416088,
+              "recall@50": 0.208805,
+              "coverage@10": 0.408642,
+              "coverage@50": 0.938272,
+              "coverage@200": 0.998765,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.279379,
+                "hit_rate@200": 0.778271,
+                "hit_rate@50": 0.407982,
+                "ndcg@10": 0.088409,
+                "ndcg@200": 0.186257,
+                "ndcg@50": 0.133589,
+                "recall@10": 0.096526,
+                "recall@200": 0.427789,
+                "recall@50": 0.217555,
+                "coverage@10": 0.364198,
+                "coverage@50": 0.925926,
+                "coverage@200": 0.998765,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.611111,
+                "hit_rate@50": 0.333333,
+                "ndcg@10": 0.080345,
+                "ndcg@200": 0.192861,
+                "ndcg@50": 0.137688,
+                "recall@10": 0.093122,
+                "recall@200": 0.456938,
+                "recall@50": 0.242208,
+                "coverage@10": 0.12716,
+                "coverage@50": 0.528395,
+                "coverage@200": 0.945679,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.255357,
+                "hit_rate@200": 0.721429,
+                "hit_rate@50": 0.366071,
+                "ndcg@10": 0.081013,
+                "ndcg@200": 0.171971,
+                "ndcg@50": 0.121515,
+                "recall@10": 0.087404,
+                "recall@200": 0.399321,
+                "recall@50": 0.197417,
+                "coverage@10": 0.377778,
+                "coverage@50": 0.923457,
+                "coverage@200": 0.998765,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.666667,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.072219,
+                "ndcg@200": 0.186543,
+                "ndcg@50": 0.157104,
+                "recall@10": 0.083333,
+                "recall@200": 0.425214,
+                "recall@50": 0.333333,
+                "coverage@10": 0.069136,
+                "coverage@50": 0.319753,
+                "coverage@200": 0.732099,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.287879,
+                "hit_rate@200": 0.787879,
+                "hit_rate@50": 0.439394,
+                "ndcg@10": 0.088362,
+                "ndcg@200": 0.199337,
+                "ndcg@50": 0.138174,
+                "recall@10": 0.095936,
+                "recall@200": 0.466435,
+                "recall@50": 0.2252,
+                "coverage@10": 0.206173,
+                "coverage@50": 0.812346,
+                "coverage@200": 0.995062,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.091724,
+                "ci_low": 0.080859,
+                "ci_high": 0.101669,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.084424,
+                "ci_low": 0.07469,
+                "ci_high": 0.093819,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.267938,
+                "ci_low": 0.242507,
+                "ci_high": 0.29337,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.208805,
+                "ci_low": 0.190805,
+                "ci_high": 0.22731,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.127918,
+                "ci_low": 0.115972,
+                "ci_high": 0.139768,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.387829,
+                "ci_low": 0.359673,
+                "ci_high": 0.415985,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.416088,
+                "ci_low": 0.397513,
+                "ci_high": 0.435028,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.179884,
+                "ci_low": 0.168247,
+                "ci_high": 0.190953,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.746594,
+                "ci_low": 0.720254,
+                "ci_high": 0.772025,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        }
+      },
+      "reference_model": "sasrec_small",
+      "comparisons": {
+        "popularity": {
+          "recall@10": {
+            "mean_a": 0.062327,
+            "mean_b": 0.092894,
+            "mean_difference": -0.030567,
+            "ci_low": -0.044717,
+            "ci_high": -0.01691,
+            "relative_difference": -0.32905,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.048049,
+            "mean_b": 0.084772,
+            "mean_difference": -0.036723,
+            "ci_low": -0.048964,
+            "ci_high": -0.024702,
+            "relative_difference": -0.43319,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.224342,
+            "mean_b": 0.276113,
+            "mean_difference": -0.051771,
+            "ci_low": -0.090827,
+            "ci_high": -0.016349,
+            "relative_difference": -0.1875,
+            "p_value": 0.0085,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.202097,
+            "mean_b": 0.215417,
+            "mean_difference": -0.013319,
+            "ci_low": -0.036815,
+            "ci_high": 0.010684,
+            "relative_difference": -0.06183,
+            "p_value": 0.28336,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.097694,
+            "mean_b": 0.129284,
+            "mean_difference": -0.031591,
+            "ci_low": -0.045997,
+            "ci_high": -0.017345,
+            "relative_difference": -0.24435,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.582198,
+            "mean_b": 0.409628,
+            "mean_difference": 0.17257,
+            "ci_low": 0.131698,
+            "ci_high": 0.213442,
+            "relative_difference": 0.42129,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.420124,
+            "mean_b": 0.421816,
+            "mean_difference": -0.001692,
+            "ci_low": -0.021277,
+            "ci_high": 0.017505,
+            "relative_difference": -0.00401,
+            "p_value": 0.87656,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.15409,
+            "mean_b": 0.181269,
+            "mean_difference": -0.027179,
+            "ci_low": -0.039593,
+            "ci_high": -0.0146,
+            "relative_difference": -0.14994,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.789282,
+            "mean_b": 0.742961,
+            "mean_difference": 0.046322,
+            "ci_low": 0.019982,
+            "ci_high": 0.071753,
+            "relative_difference": 0.06235,
+            "p_value": 0.0015,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          }
+        },
+        "hstu_small": {
+          "recall@10": {
+            "mean_a": 0.091724,
+            "mean_b": 0.092894,
+            "mean_difference": -0.00117,
+            "ci_low": -0.004963,
+            "ci_high": 0.002614,
+            "relative_difference": -0.0126,
+            "p_value": 0.54623,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.084424,
+            "mean_b": 0.084772,
+            "mean_difference": -0.000348,
+            "ci_low": -0.003227,
+            "ci_high": 0.002634,
+            "relative_difference": -0.0041,
+            "p_value": 0.81409,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.267938,
+            "mean_b": 0.276113,
+            "mean_difference": -0.008174,
+            "ci_low": -0.018165,
+            "ci_high": 0.000908,
+            "relative_difference": -0.02961,
+            "p_value": 0.13593,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.208805,
+            "mean_b": 0.215417,
+            "mean_difference": -0.006612,
+            "ci_low": -0.013257,
+            "ci_high": -0.000403,
+            "relative_difference": -0.03069,
+            "p_value": 0.04398,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.127918,
+            "mean_b": 0.129284,
+            "mean_difference": -0.001366,
+            "ci_low": -0.004062,
+            "ci_high": 0.001459,
+            "relative_difference": -0.01057,
+            "p_value": 0.34233,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.387829,
+            "mean_b": 0.409628,
+            "mean_difference": -0.021798,
+            "ci_low": -0.039055,
+            "ci_high": -0.004541,
+            "relative_difference": -0.05322,
+            "p_value": 0.01299,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.416088,
+            "mean_b": 0.421816,
+            "mean_difference": -0.005728,
+            "ci_low": -0.021833,
+            "ci_high": 0.010693,
+            "relative_difference": -0.01358,
+            "p_value": 0.48976,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.179884,
+            "mean_b": 0.181269,
+            "mean_difference": -0.001385,
+            "ci_low": -0.005859,
+            "ci_high": 0.003327,
+            "relative_difference": -0.00764,
+            "p_value": 0.56172,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.746594,
+            "mean_b": 0.742961,
+            "mean_difference": 0.003633,
+            "ci_low": -0.021798,
+            "ci_high": 0.027248,
+            "relative_difference": 0.00489,
+            "p_value": 0.83008,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          }
+        }
+      }
+    },
+    "product": {
+      "data": {
+        "variant": "product",
+        "granularity": {
+          "_default": "product"
+        },
+        "vocab_size": 499,
+        "distinct_skus": 3081,
+        "compression_vs_sku": 6.174,
+        "tokens_under_5_events": 8,
+        "sparse_token_share": 0.016,
+        "train_users": 2943,
+        "val_users": 1125,
+        "test_users": 1101,
+        "cutoff_train_end_unix": 1771380870,
+        "cutoff_val_end_unix": 1771901318,
+        "train_purchases": 5383,
+        "purchases_matured": 4935,
+        "purchases_returned": 723,
+        "purchases_immature": 448,
+        "return_rate": 0.1465
+      },
+      "vocab_size": 500,
+      "k_values": [
+        10,
+        50,
+        200
+      ],
+      "k_values_dropped": [],
+      "confidence": 0.95,
+      "models": {
+        "popularity": {
+          "type": "popularity",
+          "fit": {
+            "nonzero_tokens": 499.0,
+            "total_weight": 72361.0
+          },
+          "fit_seconds": 0.01,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.277333,
+              "hit_rate@200": 0.848889,
+              "hit_rate@50": 0.625778,
+              "ndcg@10": 0.062891,
+              "ndcg@200": 0.196297,
+              "ndcg@50": 0.1236,
+              "recall@10": 0.082228,
+              "recall@200": 0.542863,
+              "recall@50": 0.252201,
+              "coverage@10": 0.034,
+              "coverage@50": 0.134,
+              "coverage@200": 0.464,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.30819,
+                "hit_rate@200": 0.872845,
+                "hit_rate@50": 0.657328,
+                "ndcg@10": 0.074122,
+                "ndcg@200": 0.209317,
+                "ndcg@50": 0.136452,
+                "recall@10": 0.096032,
+                "recall@200": 0.558221,
+                "recall@50": 0.269731,
+                "coverage@10": 0.034,
+                "coverage@50": 0.134,
+                "coverage@200": 0.464,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.176471,
+                "hit_rate@200": 0.882353,
+                "hit_rate@50": 0.588235,
+                "ndcg@10": 0.04159,
+                "ndcg@200": 0.188259,
+                "ndcg@50": 0.099506,
+                "recall@10": 0.064706,
+                "recall@200": 0.59378,
+                "recall@50": 0.236395,
+                "coverage@10": 0.026,
+                "coverage@50": 0.116,
+                "coverage@200": 0.43,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.244328,
+                "hit_rate@200": 0.82548,
+                "hit_rate@50": 0.595113,
+                "ndcg@10": 0.053231,
+                "ndcg@200": 0.183072,
+                "ndcg@50": 0.112905,
+                "recall@10": 0.070349,
+                "recall@200": 0.522419,
+                "recall@50": 0.237403,
+                "coverage@10": 0.034,
+                "coverage@50": 0.13,
+                "coverage@200": 0.452,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 1.0,
+                "ndcg@10": 0.020687,
+                "ndcg@200": 0.2799,
+                "ndcg@50": 0.134309,
+                "recall@10": 0.035714,
+                "recall@200": 0.861607,
+                "recall@50": 0.340774,
+                "coverage@10": 0.022,
+                "coverage@50": 0.106,
+                "coverage@200": 0.412,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.373134,
+                "hit_rate@200": 0.865672,
+                "hit_rate@50": 0.656716,
+                "ndcg@10": 0.075656,
+                "ndcg@200": 0.216273,
+                "ndcg@50": 0.131529,
+                "recall@10": 0.095451,
+                "recall@200": 0.579395,
+                "recall@50": 0.256078,
+                "coverage@10": 0.032,
+                "coverage@50": 0.126,
+                "coverage@200": 0.45,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.082228,
+                "ci_low": 0.072274,
+                "ci_high": 0.091892,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.062891,
+                "ci_low": 0.054294,
+                "ci_high": 0.070851,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.277333,
+                "ci_low": 0.249778,
+                "ci_high": 0.302244,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.252201,
+                "ci_low": 0.237008,
+                "ci_high": 0.267654,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.1236,
+                "ci_low": 0.114725,
+                "ci_high": 0.132205,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.625778,
+                "ci_low": 0.596422,
+                "ci_high": 0.653333,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.542863,
+                "ci_low": 0.522721,
+                "ci_high": 0.563648,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.196297,
+                "ci_low": 0.186758,
+                "ci_high": 0.205458,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.848889,
+                "ci_low": 0.827556,
+                "ci_high": 0.870222,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.266122,
+              "hit_rate@200": 0.834696,
+              "hit_rate@50": 0.619437,
+              "ndcg@10": 0.053424,
+              "ndcg@200": 0.187453,
+              "ndcg@50": 0.114797,
+              "recall@10": 0.073372,
+              "recall@200": 0.532626,
+              "recall@50": 0.246744,
+              "coverage@10": 0.038,
+              "coverage@50": 0.134,
+              "coverage@200": 0.464,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.27051,
+                "hit_rate@200": 0.86918,
+                "hit_rate@50": 0.636364,
+                "ndcg@10": 0.055522,
+                "ndcg@200": 0.190921,
+                "ndcg@50": 0.115827,
+                "recall@10": 0.075896,
+                "recall@200": 0.53619,
+                "recall@50": 0.2438,
+                "coverage@10": 0.034,
+                "coverage@50": 0.13,
+                "coverage@200": 0.462,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.555556,
+                "hit_rate@200": 0.944444,
+                "hit_rate@50": 0.888889,
+                "ndcg@10": 0.091549,
+                "ndcg@200": 0.240523,
+                "ndcg@50": 0.172381,
+                "recall@10": 0.172443,
+                "recall@200": 0.691418,
+                "recall@50": 0.406465,
+                "coverage@10": 0.028,
+                "coverage@50": 0.12,
+                "coverage@200": 0.436,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.248214,
+                "hit_rate@200": 0.803571,
+                "hit_rate@50": 0.6,
+                "ndcg@10": 0.050093,
+                "ndcg@200": 0.184515,
+                "ndcg@50": 0.113238,
+                "recall@10": 0.066473,
+                "recall@200": 0.528021,
+                "recall@50": 0.24628,
+                "coverage@10": 0.038,
+                "coverage@50": 0.134,
+                "coverage@200": 0.464,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.833333,
+                "ndcg@10": 0.065063,
+                "ndcg@200": 0.202954,
+                "ndcg@50": 0.125965,
+                "recall@10": 0.041667,
+                "recall@200": 0.478632,
+                "recall@50": 0.193376,
+                "coverage@10": 0.022,
+                "coverage@50": 0.11,
+                "coverage@200": 0.426,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.318182,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.575758,
+                "ndcg@10": 0.055903,
+                "ndcg@200": 0.172794,
+                "ndcg@50": 0.104265,
+                "recall@10": 0.090518,
+                "recall@200": 0.508935,
+                "recall@50": 0.232094,
+                "coverage@10": 0.032,
+                "coverage@50": 0.12,
+                "coverage@200": 0.438,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.073372,
+                "ci_low": 0.064234,
+                "ci_high": 0.082631,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.053424,
+                "ci_low": 0.046398,
+                "ci_high": 0.060639,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.266122,
+                "ci_low": 0.239782,
+                "ci_high": 0.291576,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.246744,
+                "ci_low": 0.231292,
+                "ci_high": 0.262522,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.114797,
+                "ci_low": 0.106571,
+                "ci_high": 0.123189,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.619437,
+                "ci_low": 0.59035,
+                "ci_high": 0.645777,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.532626,
+                "ci_low": 0.512762,
+                "ci_high": 0.552369,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.187453,
+                "ci_low": 0.178658,
+                "ci_high": 0.196155,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.834696,
+                "ci_low": 0.812897,
+                "ci_high": 0.856494,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "sasrec_small": {
+          "type": "sasrec",
+          "fit": {
+            "train_windows": 3032.0,
+            "first_epoch_loss": 5.68418,
+            "final_epoch_loss": 3.22784,
+            "epochs": 8.0
+          },
+          "fit_seconds": 18.48,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.301333,
+              "hit_rate@200": 0.850667,
+              "hit_rate@50": 0.575111,
+              "ndcg@10": 0.113803,
+              "ndcg@200": 0.225585,
+              "ndcg@50": 0.162848,
+              "recall@10": 0.127275,
+              "recall@200": 0.525928,
+              "recall@50": 0.270333,
+              "coverage@10": 0.578,
+              "coverage@50": 0.998,
+              "coverage@200": 0.998,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.301724,
+                "hit_rate@200": 0.855603,
+                "hit_rate@50": 0.571121,
+                "ndcg@10": 0.106205,
+                "ndcg@200": 0.222094,
+                "ndcg@50": 0.158751,
+                "recall@10": 0.117671,
+                "recall@200": 0.528397,
+                "recall@50": 0.270481,
+                "coverage@10": 0.546,
+                "coverage@50": 0.994,
+                "coverage@200": 0.998,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.411765,
+                "hit_rate@200": 0.823529,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.158175,
+                "ndcg@200": 0.280305,
+                "ndcg@50": 0.208995,
+                "recall@10": 0.161905,
+                "recall@200": 0.583231,
+                "recall@50": 0.279284,
+                "coverage@10": 0.206,
+                "coverage@50": 0.68,
+                "coverage@200": 0.97,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.294939,
+                "hit_rate@200": 0.844677,
+                "hit_rate@50": 0.574171,
+                "ndcg@10": 0.115578,
+                "ndcg@200": 0.223098,
+                "ndcg@50": 0.162029,
+                "recall@10": 0.130229,
+                "recall@200": 0.516336,
+                "recall@50": 0.266543,
+                "coverage@10": 0.53,
+                "coverage@50": 0.996,
+                "coverage@200": 0.998,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.5,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.75,
+                "ndcg@10": 0.21964,
+                "ndcg@200": 0.364603,
+                "ndcg@50": 0.272523,
+                "recall@10": 0.25,
+                "recall@200": 0.763393,
+                "recall@50": 0.404762,
+                "coverage@10": 0.07,
+                "coverage@50": 0.31,
+                "coverage@200": 0.738,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.313433,
+                "hit_rate@200": 0.865672,
+                "hit_rate@50": 0.626866,
+                "ndcg@10": 0.133662,
+                "ndcg@200": 0.248852,
+                "ndcg@50": 0.179977,
+                "recall@10": 0.152416,
+                "recall@200": 0.562154,
+                "recall@50": 0.291424,
+                "coverage@10": 0.364,
+                "coverage@50": 0.964,
+                "coverage@200": 0.998,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.127275,
+                "ci_low": 0.113685,
+                "ci_high": 0.140438,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.113803,
+                "ci_low": 0.101724,
+                "ci_high": 0.125046,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.301333,
+                "ci_low": 0.274667,
+                "ci_high": 0.327133,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.270333,
+                "ci_low": 0.252778,
+                "ci_high": 0.287704,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.162848,
+                "ci_low": 0.150577,
+                "ci_high": 0.174974,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.575111,
+                "ci_low": 0.545778,
+                "ci_high": 0.602689,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.525928,
+                "ci_low": 0.507043,
+                "ci_high": 0.54523,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.225585,
+                "ci_low": 0.214141,
+                "ci_high": 0.23674,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.850667,
+                "ci_low": 0.829333,
+                "ci_high": 0.872,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.292461,
+              "hit_rate@200": 0.851953,
+              "hit_rate@50": 0.583106,
+              "ndcg@10": 0.106801,
+              "ndcg@200": 0.222696,
+              "ndcg@50": 0.156374,
+              "recall@10": 0.116862,
+              "recall@200": 0.529439,
+              "recall@50": 0.262338,
+              "coverage@10": 0.594,
+              "coverage@50": 0.996,
+              "coverage@200": 0.998,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.314856,
+                "hit_rate@200": 0.86918,
+                "hit_rate@50": 0.614191,
+                "ndcg@10": 0.113189,
+                "ndcg@200": 0.228211,
+                "ndcg@50": 0.163843,
+                "recall@10": 0.123097,
+                "recall@200": 0.526512,
+                "recall@50": 0.271309,
+                "coverage@10": 0.548,
+                "coverage@50": 0.996,
+                "coverage@200": 0.998,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.944444,
+                "hit_rate@50": 0.555556,
+                "ndcg@10": 0.122023,
+                "ndcg@200": 0.234988,
+                "ndcg@50": 0.161254,
+                "recall@10": 0.135317,
+                "recall@200": 0.547038,
+                "recall@50": 0.244148,
+                "coverage@10": 0.2,
+                "coverage@50": 0.662,
+                "coverage@200": 0.962,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.269643,
+                "hit_rate@200": 0.835714,
+                "hit_rate@50": 0.555357,
+                "ndcg@10": 0.098511,
+                "ndcg@200": 0.214451,
+                "ndcg@50": 0.146234,
+                "recall@10": 0.10861,
+                "recall@200": 0.527252,
+                "recall@50": 0.250126,
+                "coverage@10": 0.558,
+                "coverage@50": 0.996,
+                "coverage@200": 0.998,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.666667,
+                "ndcg@10": 0.157256,
+                "ndcg@200": 0.282136,
+                "ndcg@50": 0.244537,
+                "recall@10": 0.138889,
+                "recall@200": 0.537393,
+                "recall@50": 0.388889,
+                "coverage@10": 0.11,
+                "coverage@50": 0.428,
+                "coverage@200": 0.836,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.606061,
+                "ndcg@10": 0.124757,
+                "ndcg@200": 0.246216,
+                "ndcg@50": 0.182022,
+                "recall@10": 0.137241,
+                "recall@200": 0.562469,
+                "recall@50": 0.298106,
+                "coverage@10": 0.334,
+                "coverage@50": 0.934,
+                "coverage@200": 0.996,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.116862,
+                "ci_low": 0.105071,
+                "ci_high": 0.128829,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.106801,
+                "ci_low": 0.095388,
+                "ci_high": 0.118345,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.292461,
+                "ci_low": 0.266122,
+                "ci_high": 0.317916,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.262338,
+                "ci_low": 0.24596,
+                "ci_high": 0.279025,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.156374,
+                "ci_low": 0.144383,
+                "ci_high": 0.168641,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.583106,
+                "ci_low": 0.554042,
+                "ci_high": 0.611262,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.529439,
+                "ci_low": 0.510936,
+                "ci_high": 0.547902,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.222696,
+                "ci_low": 0.21147,
+                "ci_high": 0.233813,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.851953,
+                "ci_low": 0.830154,
+                "ci_high": 0.872843,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "hstu_small": {
+          "type": "hstu",
+          "fit": {
+            "train_windows": 2946.0,
+            "label_positions": 71674.0,
+            "first_epoch_loss": 5.55296,
+            "final_epoch_loss": 3.13496,
+            "epochs": 8.0,
+            "parameters": 74468.0
+          },
+          "fit_seconds": 11.45,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.310222,
+              "hit_rate@200": 0.795556,
+              "hit_rate@50": 0.52,
+              "ndcg@10": 0.113781,
+              "ndcg@200": 0.213088,
+              "ndcg@50": 0.158725,
+              "recall@10": 0.126852,
+              "recall@200": 0.477664,
+              "recall@50": 0.256767,
+              "coverage@10": 0.574,
+              "coverage@50": 0.998,
+              "coverage@200": 0.998,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.314655,
+                "hit_rate@200": 0.797414,
+                "hit_rate@50": 0.510776,
+                "ndcg@10": 0.105928,
+                "ndcg@200": 0.205883,
+                "ndcg@50": 0.152363,
+                "recall@10": 0.117885,
+                "recall@200": 0.472628,
+                "recall@50": 0.252587,
+                "coverage@10": 0.546,
+                "coverage@50": 0.998,
+                "coverage@200": 0.998,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.411765,
+                "hit_rate@200": 0.823529,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.159941,
+                "ndcg@200": 0.256322,
+                "ndcg@50": 0.215639,
+                "recall@10": 0.153501,
+                "recall@200": 0.483881,
+                "recall@50": 0.293545,
+                "coverage@10": 0.2,
+                "coverage@50": 0.752,
+                "coverage@200": 0.994,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.30192,
+                "hit_rate@200": 0.788831,
+                "hit_rate@50": 0.528796,
+                "ndcg@10": 0.115572,
+                "ndcg@200": 0.213536,
+                "ndcg@50": 0.159086,
+                "recall@10": 0.130438,
+                "recall@200": 0.477098,
+                "recall@50": 0.2569,
+                "coverage@10": 0.522,
+                "coverage@50": 0.998,
+                "coverage@200": 0.998,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.5,
+                "hit_rate@200": 0.75,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.183245,
+                "ndcg@200": 0.307573,
+                "ndcg@50": 0.238164,
+                "recall@10": 0.178571,
+                "recall@200": 0.513393,
+                "recall@50": 0.285714,
+                "coverage@10": 0.068,
+                "coverage@50": 0.334,
+                "coverage@200": 0.866,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.313433,
+                "hit_rate@200": 0.835821,
+                "hit_rate@50": 0.522388,
+                "ndcg@10": 0.136982,
+                "ndcg@200": 0.242552,
+                "ndcg@50": 0.180519,
+                "recall@10": 0.148436,
+                "recall@200": 0.513675,
+                "recall@50": 0.273525,
+                "coverage@10": 0.364,
+                "coverage@50": 0.982,
+                "coverage@200": 0.998,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.126852,
+                "ci_low": 0.113742,
+                "ci_high": 0.139619,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.113781,
+                "ci_low": 0.101999,
+                "ci_high": 0.125147,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.310222,
+                "ci_low": 0.282667,
+                "ci_high": 0.336889,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.256767,
+                "ci_low": 0.238509,
+                "ci_high": 0.274588,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.158725,
+                "ci_low": 0.145611,
+                "ci_high": 0.171288,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.52,
+                "ci_low": 0.491556,
+                "ci_high": 0.549333,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.477664,
+                "ci_low": 0.458113,
+                "ci_high": 0.497577,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.213088,
+                "ci_low": 0.201094,
+                "ci_high": 0.22457,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.795556,
+                "ci_low": 0.771556,
+                "ci_high": 0.818667,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.300636,
+              "hit_rate@200": 0.800182,
+              "hit_rate@50": 0.508629,
+              "ndcg@10": 0.107134,
+              "ndcg@200": 0.208028,
+              "ndcg@50": 0.151532,
+              "recall@10": 0.116727,
+              "recall@200": 0.473583,
+              "recall@50": 0.243406,
+              "coverage@10": 0.588,
+              "coverage@50": 0.998,
+              "coverage@200": 0.998,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.323725,
+                "hit_rate@200": 0.827051,
+                "hit_rate@50": 0.532151,
+                "ndcg@10": 0.112735,
+                "ndcg@200": 0.212325,
+                "ndcg@50": 0.157104,
+                "recall@10": 0.125092,
+                "recall@200": 0.472472,
+                "recall@50": 0.250686,
+                "coverage@10": 0.546,
+                "coverage@50": 0.998,
+                "coverage@200": 0.998,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.777778,
+                "hit_rate@50": 0.611111,
+                "ndcg@10": 0.111132,
+                "ndcg@200": 0.251314,
+                "ndcg@50": 0.174336,
+                "recall@10": 0.10754,
+                "recall@200": 0.603896,
+                "recall@50": 0.287358,
+                "coverage@10": 0.21,
+                "coverage@50": 0.718,
+                "coverage@200": 0.998,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.276786,
+                "hit_rate@200": 0.7875,
+                "hit_rate@50": 0.482143,
+                "ndcg@10": 0.099515,
+                "ndcg@200": 0.200809,
+                "ndcg@50": 0.142496,
+                "recall@10": 0.108046,
+                "recall@200": 0.470515,
+                "recall@50": 0.230797,
+                "coverage@10": 0.55,
+                "coverage@50": 0.998,
+                "coverage@200": 0.998,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.666667,
+                "ndcg@10": 0.138498,
+                "ndcg@200": 0.293577,
+                "ndcg@50": 0.234053,
+                "recall@10": 0.111111,
+                "recall@200": 0.604701,
+                "recall@50": 0.358974,
+                "coverage@10": 0.11,
+                "coverage@50": 0.476,
+                "coverage@200": 0.934,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.348485,
+                "hit_rate@200": 0.712121,
+                "hit_rate@50": 0.530303,
+                "ndcg@10": 0.129562,
+                "ndcg@200": 0.220341,
+                "ndcg@50": 0.176412,
+                "recall@10": 0.136231,
+                "recall@200": 0.45974,
+                "recall@50": 0.278156,
+                "coverage@10": 0.336,
+                "coverage@50": 0.97,
+                "coverage@200": 0.998,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.116727,
+                "ci_low": 0.105505,
+                "ci_high": 0.128701,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.107134,
+                "ci_low": 0.096031,
+                "ci_high": 0.118718,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.300636,
+                "ci_low": 0.274273,
+                "ci_high": 0.326975,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.243406,
+                "ci_low": 0.22691,
+                "ci_high": 0.260286,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.151532,
+                "ci_low": 0.139461,
+                "ci_high": 0.164208,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.508629,
+                "ci_low": 0.479564,
+                "ci_high": 0.537693,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.473583,
+                "ci_low": 0.454234,
+                "ci_high": 0.492407,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.208028,
+                "ci_low": 0.196295,
+                "ci_high": 0.219559,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.800182,
+                "ci_low": 0.77475,
+                "ci_high": 0.822911,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        }
+      },
+      "reference_model": "sasrec_small",
+      "comparisons": {
+        "popularity": {
+          "recall@10": {
+            "mean_a": 0.073372,
+            "mean_b": 0.116862,
+            "mean_difference": -0.04349,
+            "ci_low": -0.059481,
+            "ci_high": -0.027747,
+            "relative_difference": -0.37215,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.053424,
+            "mean_b": 0.106801,
+            "mean_difference": -0.053377,
+            "ci_low": -0.067387,
+            "ci_high": -0.03971,
+            "relative_difference": -0.49978,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.266122,
+            "mean_b": 0.292461,
+            "mean_difference": -0.02634,
+            "ci_low": -0.067212,
+            "ci_high": 0.011807,
+            "relative_difference": -0.09006,
+            "p_value": 0.22039,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.246744,
+            "mean_b": 0.262338,
+            "mean_difference": -0.015594,
+            "ci_low": -0.03528,
+            "ci_high": 0.004817,
+            "relative_difference": -0.05944,
+            "p_value": 0.13243,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.114797,
+            "mean_b": 0.156374,
+            "mean_difference": -0.041577,
+            "ci_low": -0.056042,
+            "ci_high": -0.027723,
+            "relative_difference": -0.26588,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.619437,
+            "mean_b": 0.583106,
+            "mean_difference": 0.036331,
+            "ci_low": 0.002725,
+            "ci_high": 0.071753,
+            "relative_difference": 0.06231,
+            "p_value": 0.04198,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.532626,
+            "mean_b": 0.529439,
+            "mean_difference": 0.003186,
+            "ci_low": -0.009929,
+            "ci_high": 0.017069,
+            "relative_difference": 0.00602,
+            "p_value": 0.63768,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.187453,
+            "mean_b": 0.222696,
+            "mean_difference": -0.035243,
+            "ci_low": -0.047238,
+            "ci_high": -0.023713,
+            "relative_difference": -0.15826,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.834696,
+            "mean_b": 0.851953,
+            "mean_difference": -0.017257,
+            "ci_low": -0.033606,
+            "ci_high": -0.001794,
+            "relative_difference": -0.02026,
+            "p_value": 0.03498,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          }
+        },
+        "hstu_small": {
+          "recall@10": {
+            "mean_a": 0.116727,
+            "mean_b": 0.116862,
+            "mean_difference": -0.000135,
+            "ci_low": -0.003048,
+            "ci_high": 0.002599,
+            "relative_difference": -0.00116,
+            "p_value": 0.92754,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.107134,
+            "mean_b": 0.106801,
+            "mean_difference": 0.000332,
+            "ci_low": -0.002242,
+            "ci_high": 0.002971,
+            "relative_difference": 0.00311,
+            "p_value": 0.7951,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.300636,
+            "mean_b": 0.292461,
+            "mean_difference": 0.008174,
+            "ci_low": 0.002725,
+            "ci_high": 0.014532,
+            "relative_difference": 0.02795,
+            "p_value": 0.01299,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.243406,
+            "mean_b": 0.262338,
+            "mean_difference": -0.018932,
+            "ci_low": -0.031323,
+            "ci_high": -0.007185,
+            "relative_difference": -0.07217,
+            "p_value": 0.002,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.151532,
+            "mean_b": 0.156374,
+            "mean_difference": -0.004841,
+            "ci_low": -0.008971,
+            "ci_high": -0.00083,
+            "relative_difference": -0.03096,
+            "p_value": 0.01949,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.508629,
+            "mean_b": 0.583106,
+            "mean_difference": -0.074478,
+            "ci_low": -0.101726,
+            "ci_high": -0.048115,
+            "relative_difference": -0.12773,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.473583,
+            "mean_b": 0.529439,
+            "mean_difference": -0.055856,
+            "ci_low": -0.071544,
+            "ci_high": -0.040156,
+            "relative_difference": -0.1055,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.208028,
+            "mean_b": 0.222696,
+            "mean_difference": -0.014668,
+            "ci_low": -0.019669,
+            "ci_high": -0.009816,
+            "relative_difference": -0.06587,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.800182,
+            "mean_b": 0.851953,
+            "mean_difference": -0.051771,
+            "ci_low": -0.070867,
+            "ci_high": -0.033583,
+            "relative_difference": -0.06077,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          }
+        }
+      }
+    },
+    "config": {
+      "data": {
+        "variant": "config",
+        "granularity": {
+          "_default": "sku",
+          "apparel": "style_color",
+          "electronics": "product + capacity",
+          "footwear": "style_color",
+          "grocery": "sku",
+          "home": "style_color",
+          "pharmacy": "sku"
+        },
+        "vocab_size": 944,
+        "distinct_skus": 3081,
+        "compression_vs_sku": 3.264,
+        "tokens_under_5_events": 36,
+        "sparse_token_share": 0.0381,
+        "train_users": 2943,
+        "val_users": 1125,
+        "test_users": 1101,
+        "cutoff_train_end_unix": 1771380870,
+        "cutoff_val_end_unix": 1771901318,
+        "train_purchases": 5383,
+        "purchases_matured": 4935,
+        "purchases_returned": 723,
+        "purchases_immature": 448,
+        "return_rate": 0.1465
+      },
+      "vocab_size": 945,
+      "k_values": [
+        10,
+        50,
+        200
+      ],
+      "k_values_dropped": [],
+      "confidence": 0.95,
+      "models": {
+        "popularity": {
+          "type": "popularity",
+          "fit": {
+            "nonzero_tokens": 944.0,
+            "total_weight": 72361.0
+          },
+          "fit_seconds": 0.01,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.247111,
+              "hit_rate@200": 0.809778,
+              "hit_rate@50": 0.580444,
+              "ndcg@10": 0.058159,
+              "ndcg@200": 0.160081,
+              "ndcg@50": 0.103604,
+              "recall@10": 0.073095,
+              "recall@200": 0.421961,
+              "recall@50": 0.198865,
+              "coverage@10": 0.019048,
+              "coverage@50": 0.067725,
+              "coverage@200": 0.238095,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.275862,
+                "hit_rate@200": 0.849138,
+                "hit_rate@50": 0.609914,
+                "ndcg@10": 0.069271,
+                "ndcg@200": 0.174145,
+                "ndcg@50": 0.116026,
+                "recall@10": 0.085809,
+                "recall@200": 0.44541,
+                "recall@50": 0.216484,
+                "coverage@10": 0.016931,
+                "coverage@50": 0.067725,
+                "coverage@200": 0.237037,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.235294,
+                "hit_rate@200": 0.764706,
+                "hit_rate@50": 0.588235,
+                "ndcg@10": 0.05422,
+                "ndcg@200": 0.15911,
+                "ndcg@50": 0.097093,
+                "recall@10": 0.084314,
+                "recall@200": 0.459766,
+                "recall@50": 0.210975,
+                "coverage@10": 0.013757,
+                "coverage@50": 0.059259,
+                "coverage@200": 0.224339,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.21466,
+                "hit_rate@200": 0.773124,
+                "hit_rate@50": 0.553229,
+                "ndcg@10": 0.04798,
+                "ndcg@200": 0.14643,
+                "ndcg@50": 0.093409,
+                "recall@10": 0.061119,
+                "recall@200": 0.396728,
+                "recall@50": 0.185203,
+                "coverage@10": 0.019048,
+                "coverage@50": 0.065608,
+                "coverage@200": 0.237037,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.0,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 1.0,
+                "ndcg@10": 0.0,
+                "ndcg@200": 0.156758,
+                "ndcg@50": 0.064833,
+                "recall@10": 0.0,
+                "recall@200": 0.52381,
+                "recall@50": 0.181548,
+                "coverage@10": 0.010582,
+                "coverage@50": 0.055026,
+                "coverage@200": 0.216931,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.343284,
+                "hit_rate@200": 0.850746,
+                "hit_rate@50": 0.58209,
+                "ndcg@10": 0.072724,
+                "ndcg@200": 0.179871,
+                "ndcg@50": 0.108734,
+                "recall@10": 0.088984,
+                "recall@200": 0.459688,
+                "recall@50": 0.191651,
+                "coverage@10": 0.016931,
+                "coverage@50": 0.061376,
+                "coverage@200": 0.228571,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.073095,
+                "ci_low": 0.0638,
+                "ci_high": 0.082187,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.058159,
+                "ci_low": 0.050072,
+                "ci_high": 0.065861,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.247111,
+                "ci_low": 0.222222,
+                "ci_high": 0.271111,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.198865,
+                "ci_low": 0.186259,
+                "ci_high": 0.211757,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.103604,
+                "ci_low": 0.095214,
+                "ci_high": 0.111821,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.580444,
+                "ci_low": 0.552,
+                "ci_high": 0.609778,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.421961,
+                "ci_low": 0.404111,
+                "ci_high": 0.439957,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.160081,
+                "ci_low": 0.15143,
+                "ci_high": 0.168505,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.809778,
+                "ci_low": 0.786667,
+                "ci_high": 0.833778,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.220708,
+              "hit_rate@200": 0.789282,
+              "hit_rate@50": 0.578565,
+              "ndcg@10": 0.047276,
+              "ndcg@200": 0.150916,
+              "ndcg@50": 0.096215,
+              "recall@10": 0.060815,
+              "recall@200": 0.40952,
+              "recall@50": 0.198362,
+              "coverage@10": 0.019048,
+              "coverage@50": 0.066667,
+              "coverage@200": 0.240212,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.235033,
+                "hit_rate@200": 0.824834,
+                "hit_rate@50": 0.572062,
+                "ndcg@10": 0.0506,
+                "ndcg@200": 0.153908,
+                "ndcg@50": 0.097736,
+                "recall@10": 0.065185,
+                "recall@200": 0.409578,
+                "recall@50": 0.195992,
+                "coverage@10": 0.016931,
+                "coverage@50": 0.066667,
+                "coverage@200": 0.240212,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.388889,
+                "hit_rate@200": 0.944444,
+                "hit_rate@50": 0.833333,
+                "ndcg@10": 0.075554,
+                "ndcg@200": 0.209755,
+                "ndcg@50": 0.14832,
+                "recall@10": 0.13578,
+                "recall@200": 0.598166,
+                "recall@50": 0.353842,
+                "coverage@10": 0.014815,
+                "coverage@50": 0.060317,
+                "coverage@200": 0.226455,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.203571,
+                "hit_rate@200": 0.7625,
+                "hit_rate@50": 0.580357,
+                "ndcg@10": 0.044626,
+                "ndcg@200": 0.149408,
+                "ndcg@50": 0.095373,
+                "recall@10": 0.056324,
+                "recall@200": 0.40959,
+                "recall@50": 0.199286,
+                "coverage@10": 0.019048,
+                "coverage@50": 0.066667,
+                "coverage@200": 0.239153,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.166667,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.666667,
+                "ndcg@10": 0.056527,
+                "ndcg@200": 0.156349,
+                "ndcg@50": 0.096073,
+                "recall@10": 0.033333,
+                "recall@200": 0.37735,
+                "recall@50": 0.144444,
+                "coverage@10": 0.01164,
+                "coverage@50": 0.056085,
+                "coverage@200": 0.221164,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.227273,
+                "hit_rate@200": 0.727273,
+                "hit_rate@50": 0.530303,
+                "ndcg@10": 0.038493,
+                "ndcg@200": 0.126718,
+                "ndcg@50": 0.078772,
+                "recall@10": 0.051106,
+                "recall@200": 0.360006,
+                "recall@50": 0.169217,
+                "coverage@10": 0.016931,
+                "coverage@50": 0.062434,
+                "coverage@200": 0.225397,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.060815,
+                "ci_low": 0.052564,
+                "ci_high": 0.069215,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.047276,
+                "ci_low": 0.040435,
+                "ci_high": 0.054215,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.220708,
+                "ci_low": 0.196185,
+                "ci_high": 0.245232,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.198362,
+                "ci_low": 0.184434,
+                "ci_high": 0.211628,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.096215,
+                "ci_low": 0.08861,
+                "ci_high": 0.103867,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.578565,
+                "ci_low": 0.549478,
+                "ci_high": 0.604927,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.40952,
+                "ci_low": 0.392337,
+                "ci_high": 0.427616,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.150916,
+                "ci_low": 0.142918,
+                "ci_high": 0.158864,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.789282,
+                "ci_low": 0.765645,
+                "ci_high": 0.812897,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "sasrec_small": {
+          "type": "sasrec",
+          "fit": {
+            "train_windows": 3032.0,
+            "first_epoch_loss": 6.36329,
+            "final_epoch_loss": 3.80887,
+            "epochs": 8.0
+          },
+          "fit_seconds": 21.24,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.287111,
+              "hit_rate@200": 0.746667,
+              "hit_rate@50": 0.411556,
+              "ndcg@10": 0.08581,
+              "ndcg@200": 0.181916,
+              "ndcg@50": 0.131694,
+              "recall@10": 0.097423,
+              "recall@200": 0.423174,
+              "recall@50": 0.224449,
+              "coverage@10": 0.312169,
+              "coverage@50": 0.847619,
+              "coverage@200": 0.998942,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.297414,
+                "hit_rate@200": 0.74569,
+                "hit_rate@50": 0.415948,
+                "ndcg@10": 0.089877,
+                "ndcg@200": 0.186539,
+                "ndcg@50": 0.13412,
+                "recall@10": 0.101929,
+                "recall@200": 0.430595,
+                "recall@50": 0.223102,
+                "coverage@10": 0.288889,
+                "coverage@50": 0.821164,
+                "coverage@200": 0.997884,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.294118,
+                "hit_rate@200": 0.764706,
+                "hit_rate@50": 0.529412,
+                "ndcg@10": 0.082599,
+                "ndcg@200": 0.205446,
+                "ndcg@50": 0.168044,
+                "recall@10": 0.095798,
+                "recall@200": 0.481602,
+                "recall@50": 0.327858,
+                "coverage@10": 0.10582,
+                "coverage@50": 0.435979,
+                "coverage@200": 0.868783,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.275742,
+                "hit_rate@200": 0.750436,
+                "hit_rate@50": 0.406632,
+                "ndcg@10": 0.081377,
+                "ndcg@200": 0.175657,
+                "ndcg@50": 0.126372,
+                "recall@10": 0.093311,
+                "recall@200": 0.414844,
+                "recall@50": 0.219915,
+                "coverage@10": 0.286772,
+                "coverage@50": 0.826455,
+                "coverage@200": 0.998942,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.5,
+                "hit_rate@200": 0.75,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.104179,
+                "ndcg@200": 0.246926,
+                "ndcg@50": 0.203382,
+                "recall@10": 0.098214,
+                "recall@200": 0.532738,
+                "recall@50": 0.330357,
+                "coverage@10": 0.037037,
+                "coverage@50": 0.166138,
+                "coverage@200": 0.497354,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.298507,
+                "hit_rate@200": 0.716418,
+                "hit_rate@50": 0.38806,
+                "ndcg@10": 0.095276,
+                "ndcg@200": 0.193573,
+                "ndcg@50": 0.146905,
+                "recall@10": 0.101759,
+                "recall@200": 0.421662,
+                "recall@50": 0.239987,
+                "coverage@10": 0.180952,
+                "coverage@50": 0.714286,
+                "coverage@200": 0.996825,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.097423,
+                "ci_low": 0.086842,
+                "ci_high": 0.108326,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.08581,
+                "ci_low": 0.076129,
+                "ci_high": 0.095451,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.287111,
+                "ci_low": 0.261333,
+                "ci_high": 0.313778,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.224449,
+                "ci_low": 0.205494,
+                "ci_high": 0.242669,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.131694,
+                "ci_low": 0.119321,
+                "ci_high": 0.143379,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.411556,
+                "ci_low": 0.383111,
+                "ci_high": 0.440889,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.423174,
+                "ci_low": 0.403367,
+                "ci_high": 0.442361,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.181916,
+                "ci_low": 0.170076,
+                "ci_high": 0.193114,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.746667,
+                "ci_low": 0.72,
+                "ci_high": 0.770689,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.27248,
+              "hit_rate@200": 0.747502,
+              "hit_rate@50": 0.386921,
+              "ndcg@10": 0.085106,
+              "ndcg@200": 0.179688,
+              "ndcg@50": 0.126032,
+              "recall@10": 0.094839,
+              "recall@200": 0.421948,
+              "recall@50": 0.206893,
+              "coverage@10": 0.328042,
+              "coverage@50": 0.853968,
+              "coverage@200": 0.997884,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.286031,
+                "hit_rate@200": 0.760532,
+                "hit_rate@50": 0.403548,
+                "ndcg@10": 0.087559,
+                "ndcg@200": 0.182479,
+                "ndcg@50": 0.130042,
+                "recall@10": 0.100956,
+                "recall@200": 0.423343,
+                "recall@50": 0.217072,
+                "coverage@10": 0.308995,
+                "coverage@50": 0.838095,
+                "coverage@200": 0.996825,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.666667,
+                "hit_rate@50": 0.277778,
+                "ndcg@10": 0.099957,
+                "ndcg@200": 0.184505,
+                "ndcg@50": 0.140272,
+                "recall@10": 0.117196,
+                "recall@200": 0.42001,
+                "recall@50": 0.228716,
+                "coverage@10": 0.10582,
+                "coverage@50": 0.445503,
+                "coverage@200": 0.806349,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.253571,
+                "hit_rate@200": 0.730357,
+                "hit_rate@50": 0.373214,
+                "ndcg@10": 0.080834,
+                "ndcg@200": 0.175015,
+                "ndcg@50": 0.119275,
+                "recall@10": 0.08804,
+                "recall@200": 0.420599,
+                "recall@50": 0.194375,
+                "coverage@10": 0.298413,
+                "coverage@50": 0.826455,
+                "coverage@200": 0.997884,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.833333,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.098164,
+                "ndcg@200": 0.227464,
+                "ndcg@50": 0.198935,
+                "recall@10": 0.083333,
+                "recall@200": 0.477778,
+                "recall@50": 0.361111,
+                "coverage@10": 0.058201,
+                "coverage@50": 0.275132,
+                "coverage@200": 0.659259,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.818182,
+                "hit_rate@50": 0.409091,
+                "ndcg@10": 0.099348,
+                "ndcg@200": 0.194621,
+                "ndcg@50": 0.145443,
+                "recall@10": 0.105676,
+                "recall@200": 0.419319,
+                "recall@50": 0.223582,
+                "coverage@10": 0.17037,
+                "coverage@50": 0.697354,
+                "coverage@200": 0.982011,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.094839,
+                "ci_low": 0.0843,
+                "ci_high": 0.105371,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.085106,
+                "ci_low": 0.075404,
+                "ci_high": 0.094678,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.27248,
+                "ci_low": 0.245232,
+                "ci_high": 0.298819,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.206893,
+                "ci_low": 0.189953,
+                "ci_high": 0.224927,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.126032,
+                "ci_low": 0.114429,
+                "ci_high": 0.137797,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.386921,
+                "ci_low": 0.358765,
+                "ci_high": 0.415077,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.421948,
+                "ci_low": 0.403077,
+                "ci_high": 0.441356,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.179688,
+                "ci_low": 0.168184,
+                "ci_high": 0.190948,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.747502,
+                "ci_low": 0.722071,
+                "ci_high": 0.773842,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        },
+        "hstu_small": {
+          "type": "hstu",
+          "fit": {
+            "train_windows": 2946.0,
+            "label_positions": 71674.0,
+            "first_epoch_loss": 6.27982,
+            "final_epoch_loss": 3.70116,
+            "epochs": 8.0,
+            "parameters": 102948.0
+          },
+          "fit_seconds": 19.38,
+          "val": {
+            "overall": {
+              "hit_rate@10": 0.285333,
+              "hit_rate@200": 0.744889,
+              "hit_rate@50": 0.379556,
+              "ndcg@10": 0.08334,
+              "ndcg@200": 0.180354,
+              "ndcg@50": 0.128415,
+              "recall@10": 0.094829,
+              "recall@200": 0.425253,
+              "recall@50": 0.21771,
+              "coverage@10": 0.32381,
+              "coverage@50": 0.853968,
+              "coverage@200": 0.998942,
+              "eval_users": 1125.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.299569,
+                "hit_rate@200": 0.743534,
+                "hit_rate@50": 0.385776,
+                "ndcg@10": 0.08778,
+                "ndcg@200": 0.1831,
+                "ndcg@50": 0.131457,
+                "recall@10": 0.097605,
+                "recall@200": 0.423163,
+                "recall@50": 0.216938,
+                "coverage@10": 0.304762,
+                "coverage@50": 0.834921,
+                "coverage@200": 0.998942,
+                "eval_users": 464.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.294118,
+                "hit_rate@200": 0.764706,
+                "hit_rate@50": 0.470588,
+                "ndcg@10": 0.073637,
+                "ndcg@200": 0.210512,
+                "ndcg@50": 0.156361,
+                "recall@10": 0.082563,
+                "recall@200": 0.534887,
+                "recall@50": 0.302903,
+                "coverage@10": 0.10582,
+                "coverage@50": 0.450794,
+                "coverage@200": 0.874074,
+                "eval_users": 17.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.275742,
+                "hit_rate@200": 0.739965,
+                "hit_rate@50": 0.371728,
+                "ndcg@10": 0.07968,
+                "ndcg@200": 0.17367,
+                "ndcg@50": 0.123045,
+                "recall@10": 0.093377,
+                "recall@200": 0.415517,
+                "recall@50": 0.212806,
+                "coverage@10": 0.295238,
+                "coverage@50": 0.832804,
+                "coverage@200": 0.998942,
+                "eval_users": 573.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.25,
+                "hit_rate@200": 1.0,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.09047,
+                "ndcg@200": 0.282654,
+                "ndcg@50": 0.212138,
+                "recall@10": 0.0625,
+                "recall@200": 0.635417,
+                "recall@50": 0.330357,
+                "coverage@10": 0.034921,
+                "coverage@50": 0.166138,
+                "coverage@200": 0.526984,
+                "eval_users": 4.0
+              },
+              "home": {
+                "hit_rate@10": 0.268657,
+                "hit_rate@200": 0.776119,
+                "hit_rate@50": 0.373134,
+                "ndcg@10": 0.085924,
+                "ndcg@200": 0.204743,
+                "ndcg@50": 0.141188,
+                "recall@10": 0.09307,
+                "recall@200": 0.482624,
+                "recall@50": 0.236646,
+                "coverage@10": 0.191534,
+                "coverage@50": 0.724868,
+                "coverage@200": 0.996825,
+                "eval_users": 67.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.094829,
+                "ci_low": 0.084292,
+                "ci_high": 0.105326,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.08334,
+                "ci_low": 0.073969,
+                "ci_high": 0.092768,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.285333,
+                "ci_low": 0.259556,
+                "ci_high": 0.312,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.21771,
+                "ci_low": 0.198322,
+                "ci_high": 0.236055,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.128415,
+                "ci_low": 0.11619,
+                "ci_high": 0.140361,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.379556,
+                "ci_low": 0.352,
+                "ci_high": 0.408,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.425253,
+                "ci_low": 0.406009,
+                "ci_high": 0.443807,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.180354,
+                "ci_low": 0.168904,
+                "ci_high": 0.191805,
+                "n": 1125,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.744889,
+                "ci_low": 0.72,
+                "ci_high": 0.768889,
+                "n": 1125,
+                "confidence": 0.95
+              }
+            }
+          },
+          "test": {
+            "overall": {
+              "hit_rate@10": 0.275204,
+              "hit_rate@200": 0.73297,
+              "hit_rate@50": 0.375114,
+              "ndcg@10": 0.082058,
+              "ndcg@200": 0.175838,
+              "ndcg@50": 0.123891,
+              "recall@10": 0.091613,
+              "recall@200": 0.413526,
+              "recall@50": 0.203972,
+              "coverage@10": 0.342857,
+              "coverage@50": 0.875132,
+              "coverage@200": 0.998942,
+              "eval_users": 1101.0
+            },
+            "by_category": {
+              "apparel": {
+                "hit_rate@10": 0.286031,
+                "hit_rate@200": 0.756098,
+                "hit_rate@50": 0.390244,
+                "ndcg@10": 0.082493,
+                "ndcg@200": 0.180659,
+                "ndcg@50": 0.128114,
+                "recall@10": 0.092072,
+                "recall@200": 0.422767,
+                "recall@50": 0.213833,
+                "coverage@10": 0.310053,
+                "coverage@50": 0.84127,
+                "coverage@200": 0.998942,
+                "eval_users": 451.0
+              },
+              "electronics": {
+                "hit_rate@10": 0.277778,
+                "hit_rate@200": 0.777778,
+                "hit_rate@50": 0.333333,
+                "ndcg@10": 0.095949,
+                "ndcg@200": 0.192353,
+                "ndcg@50": 0.140451,
+                "recall@10": 0.130159,
+                "recall@200": 0.477483,
+                "recall@50": 0.249549,
+                "coverage@10": 0.108995,
+                "coverage@50": 0.461376,
+                "coverage@200": 0.906878,
+                "eval_users": 18.0
+              },
+              "footwear": {
+                "hit_rate@10": 0.260714,
+                "hit_rate@200": 0.705357,
+                "hit_rate@50": 0.360714,
+                "ndcg@10": 0.079597,
+                "ndcg@200": 0.168391,
+                "ndcg@50": 0.117258,
+                "recall@10": 0.088666,
+                "recall@200": 0.400372,
+                "recall@50": 0.191566,
+                "coverage@10": 0.314286,
+                "coverage@50": 0.85291,
+                "coverage@200": 0.998942,
+                "eval_users": 560.0
+              },
+              "grocery": {
+                "hit_rate@10": 0.333333,
+                "hit_rate@200": 0.666667,
+                "hit_rate@50": 0.5,
+                "ndcg@10": 0.100219,
+                "ndcg@200": 0.229188,
+                "ndcg@50": 0.198783,
+                "recall@10": 0.083333,
+                "recall@200": 0.452991,
+                "recall@50": 0.361111,
+                "coverage@10": 0.056085,
+                "coverage@50": 0.270899,
+                "coverage@200": 0.674074,
+                "eval_users": 6.0
+              },
+              "home": {
+                "hit_rate@10": 0.318182,
+                "hit_rate@200": 0.80303,
+                "hit_rate@50": 0.393939,
+                "ndcg@10": 0.094531,
+                "ndcg@200": 0.19672,
+                "ndcg@50": 0.139991,
+                "recall@10": 0.103722,
+                "recall@200": 0.440959,
+                "recall@50": 0.215141,
+                "coverage@10": 0.173545,
+                "coverage@50": 0.70582,
+                "coverage@200": 0.994709,
+                "eval_users": 66.0
+              }
+            },
+            "intervals": {
+              "recall@10": {
+                "mean": 0.091613,
+                "ci_low": 0.08132,
+                "ci_high": 0.101714,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@10": {
+                "mean": 0.082058,
+                "ci_low": 0.072928,
+                "ci_high": 0.091185,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@10": {
+                "mean": 0.275204,
+                "ci_low": 0.248865,
+                "ci_high": 0.301544,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@50": {
+                "mean": 0.203972,
+                "ci_low": 0.185878,
+                "ci_high": 0.222226,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@50": {
+                "mean": 0.123891,
+                "ci_low": 0.112182,
+                "ci_high": 0.135623,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@50": {
+                "mean": 0.375114,
+                "ci_low": 0.346957,
+                "ci_high": 0.40327,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "recall@200": {
+                "mean": 0.413526,
+                "ci_low": 0.394056,
+                "ci_high": 0.432261,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "ndcg@200": {
+                "mean": 0.175838,
+                "ci_low": 0.164701,
+                "ci_high": 0.186848,
+                "n": 1101,
+                "confidence": 0.95
+              },
+              "hit_rate@200": {
+                "mean": 0.73297,
+                "ci_low": 0.705722,
+                "ci_high": 0.758401,
+                "n": 1101,
+                "confidence": 0.95
+              }
+            }
+          }
+        }
+      },
+      "reference_model": "sasrec_small",
+      "comparisons": {
+        "popularity": {
+          "recall@10": {
+            "mean_a": 0.060815,
+            "mean_b": 0.094839,
+            "mean_difference": -0.034024,
+            "ci_low": -0.048929,
+            "ci_high": -0.020137,
+            "relative_difference": -0.35876,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.047276,
+            "mean_b": 0.085106,
+            "mean_difference": -0.03783,
+            "ci_low": -0.050154,
+            "ci_high": -0.025586,
+            "relative_difference": -0.4445,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.220708,
+            "mean_b": 0.27248,
+            "mean_difference": -0.051771,
+            "ci_low": -0.091735,
+            "ci_high": -0.015441,
+            "relative_difference": -0.19,
+            "p_value": 0.0085,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.198362,
+            "mean_b": 0.206893,
+            "mean_difference": -0.008531,
+            "ci_low": -0.032399,
+            "ci_high": 0.014785,
+            "relative_difference": -0.04124,
+            "p_value": 0.50275,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.096215,
+            "mean_b": 0.126032,
+            "mean_difference": -0.029817,
+            "ci_low": -0.043997,
+            "ci_high": -0.015302,
+            "relative_difference": -0.23658,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.578565,
+            "mean_b": 0.386921,
+            "mean_difference": 0.191644,
+            "ci_low": 0.149864,
+            "ci_high": 0.230699,
+            "relative_difference": 0.49531,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.40952,
+            "mean_b": 0.421948,
+            "mean_difference": -0.012428,
+            "ci_low": -0.032572,
+            "ci_high": 0.007576,
+            "relative_difference": -0.02945,
+            "p_value": 0.23188,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.150916,
+            "mean_b": 0.179688,
+            "mean_difference": -0.028773,
+            "ci_low": -0.041202,
+            "ci_high": -0.01609,
+            "relative_difference": -0.16013,
+            "p_value": 0.0005,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.789282,
+            "mean_b": 0.747502,
+            "mean_difference": 0.04178,
+            "ci_low": 0.015441,
+            "ci_high": 0.067234,
+            "relative_difference": 0.05589,
+            "p_value": 0.001,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          }
+        },
+        "hstu_small": {
+          "recall@10": {
+            "mean_a": 0.091613,
+            "mean_b": 0.094839,
+            "mean_difference": -0.003226,
+            "ci_low": -0.007336,
+            "ci_high": 0.000899,
+            "relative_difference": -0.03402,
+            "p_value": 0.12794,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@10": {
+            "mean_a": 0.082058,
+            "mean_b": 0.085106,
+            "mean_difference": -0.003048,
+            "ci_low": -0.005777,
+            "ci_high": -0.000307,
+            "relative_difference": -0.03581,
+            "p_value": 0.02349,
+            "n": 1101,
+            "significant": true,
+            "confidence": 0.95
+          },
+          "hit_rate@10": {
+            "mean_a": 0.275204,
+            "mean_b": 0.27248,
+            "mean_difference": 0.002725,
+            "ci_low": -0.006358,
+            "ci_high": 0.012716,
+            "relative_difference": 0.01,
+            "p_value": 0.69115,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@50": {
+            "mean_a": 0.203972,
+            "mean_b": 0.206893,
+            "mean_difference": -0.002921,
+            "ci_low": -0.008595,
+            "ci_high": 0.002713,
+            "relative_difference": -0.01412,
+            "p_value": 0.30485,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@50": {
+            "mean_a": 0.123891,
+            "mean_b": 0.126032,
+            "mean_difference": -0.002141,
+            "ci_low": -0.00457,
+            "ci_high": 0.000296,
+            "relative_difference": -0.01698,
+            "p_value": 0.08746,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@50": {
+            "mean_a": 0.375114,
+            "mean_b": 0.386921,
+            "mean_difference": -0.011807,
+            "ci_low": -0.02634,
+            "ci_high": 0.002725,
+            "relative_difference": -0.03052,
+            "p_value": 0.14743,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "recall@200": {
+            "mean_a": 0.413526,
+            "mean_b": 0.421948,
+            "mean_difference": -0.008422,
+            "ci_low": -0.025995,
+            "ci_high": 0.008077,
+            "relative_difference": -0.01996,
+            "p_value": 0.30635,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "ndcg@200": {
+            "mean_a": 0.175838,
+            "mean_b": 0.179688,
+            "mean_difference": -0.003851,
+            "ci_low": -0.00813,
+            "ci_high": 0.000636,
+            "relative_difference": -0.02143,
+            "p_value": 0.08696,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          },
+          "hit_rate@200": {
+            "mean_a": 0.73297,
+            "mean_b": 0.747502,
+            "mean_difference": -0.014532,
+            "ci_low": -0.039964,
+            "ci_high": 0.012716,
+            "relative_difference": -0.01944,
+            "p_value": 0.30085,
+            "n": 1101,
+            "significant": false,
+            "confidence": 0.95
+          }
+        }
+      }
+    }
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39"
+  },
+  "duration_seconds": 339.27
+}

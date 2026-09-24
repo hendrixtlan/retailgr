@@ -1,0 +1,510 @@
+{
+  "variant": "config",
+  "candidate_k": 300,
+  "seeds": [
+    13,
+    17,
+    23,
+    29,
+    31
+  ],
+  "max_users": 400,
+  "retrieval_config": "hstu_small.yaml",
+  "retrieval_seconds": 12.1,
+  "entries": {
+    "control": {
+      "overrides": {
+        "candidate_positive": "next",
+        "history_loss_weight": 1.0
+      },
+      "runs": [
+        {
+          "fit_seconds": 220.4,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.99312,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5447,
+              "resolution_share": 0.00011,
+              "bias_ratio": 1.8771,
+              "ece_relative": 2.3898,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5347,
+              "resolution_share": 9.4e-05,
+              "bias_ratio": 1.944,
+              "ece_relative": 2.3992,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.4651,
+              "resolution_share": 2.6e-05,
+              "bias_ratio": 3.0179,
+              "ece_relative": 3.2937,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 214.3,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 1.07696,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5419,
+              "resolution_share": 8.3e-05,
+              "bias_ratio": 1.4609,
+              "ece_relative": 1.9924,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5326,
+              "resolution_share": 0.000108,
+              "bias_ratio": 1.4844,
+              "ece_relative": 2.001,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5115,
+              "resolution_share": 0.000216,
+              "bias_ratio": 1.8005,
+              "ece_relative": 2.2144,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 223.5,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 1.51748,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5444,
+              "resolution_share": 0.000154,
+              "bias_ratio": 0.9247,
+              "ece_relative": 1.2966,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5523,
+              "resolution_share": 0.000287,
+              "bias_ratio": 1.0974,
+              "ece_relative": 1.3473,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5308,
+              "resolution_share": 8.4e-05,
+              "bias_ratio": 0.9889,
+              "ece_relative": 1.2522,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 250.7,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 1.1365,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5667,
+              "resolution_share": 0.000201,
+              "bias_ratio": 1.8417,
+              "ece_relative": 2.4162,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5695,
+              "resolution_share": 0.0002,
+              "bias_ratio": 1.8766,
+              "ece_relative": 2.5195,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5692,
+              "resolution_share": 0.000101,
+              "bias_ratio": 3.4005,
+              "ece_relative": 3.5611,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 223.2,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 1.20613,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5297,
+              "resolution_share": 5.3e-05,
+              "bias_ratio": 3.7443,
+              "ece_relative": 4.3404,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.5422,
+              "resolution_share": 9e-05,
+              "bias_ratio": 3.7251,
+              "ece_relative": 4.3231,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5215,
+              "resolution_share": 8.4e-05,
+              "bias_ratio": 2.5519,
+              "ece_relative": 2.4397,
+              "retrieval_auc": 0.6953
+            }
+          }
+        }
+      ],
+      "heads": {
+        "click": {
+          "auc_mean": 0.5455,
+          "auc_std": 0.0134,
+          "values": [
+            0.5447,
+            0.5419,
+            0.5444,
+            0.5667,
+            0.5297
+          ],
+          "bias_ratio_mean": 1.9697,
+          "retrieval_auc": 0.7138,
+          "over_chance": 0.0455,
+          "control_over_chance": 0.0455,
+          "vs_control": 1.0,
+          "beyond_seed_noise": false
+        },
+        "cart": {
+          "auc_mean": 0.5463,
+          "auc_std": 0.0151,
+          "values": [
+            0.5347,
+            0.5326,
+            0.5523,
+            0.5695,
+            0.5422
+          ],
+          "bias_ratio_mean": 2.0255,
+          "retrieval_auc": 0.7138,
+          "over_chance": 0.0463,
+          "control_over_chance": 0.0463,
+          "vs_control": 1.0,
+          "beyond_seed_noise": false
+        },
+        "purchase": {
+          "auc_mean": 0.5196,
+          "auc_std": 0.0375,
+          "values": [
+            0.4651,
+            0.5115,
+            0.5308,
+            0.5692,
+            0.5215
+          ],
+          "bias_ratio_mean": 2.3519,
+          "retrieval_auc": 0.6953,
+          "over_chance": 0.0196,
+          "control_over_chance": 0.0196,
+          "vs_control": 1.0,
+          "beyond_seed_noise": false
+        }
+      },
+      "cut_fallback_share": 0.0
+    },
+    "no_history": {
+      "overrides": {
+        "candidate_positive": "next",
+        "history_loss_weight": 0.0
+      },
+      "runs": [
+        {
+          "fit_seconds": 220.4,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.03252,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.634,
+              "resolution_share": 0.000706,
+              "bias_ratio": 1.1967,
+              "ece_relative": 1.2141,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6355,
+              "resolution_share": 0.000735,
+              "bias_ratio": 1.5675,
+              "ece_relative": 1.5347,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5774,
+              "resolution_share": 0.000174,
+              "bias_ratio": 2.8473,
+              "ece_relative": 2.786,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 223.2,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.01781,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6272,
+              "resolution_share": 0.000553,
+              "bias_ratio": 0.3399,
+              "ece_relative": 0.6601,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6299,
+              "resolution_share": 0.000521,
+              "bias_ratio": 0.3595,
+              "ece_relative": 0.6405,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5694,
+              "resolution_share": 8.4e-05,
+              "bias_ratio": 0.4451,
+              "ece_relative": 0.7556,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 222.4,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.0784,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6489,
+              "resolution_share": 0.000794,
+              "bias_ratio": 0.404,
+              "ece_relative": 0.596,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6477,
+              "resolution_share": 0.000821,
+              "bias_ratio": 0.4109,
+              "ece_relative": 0.5891,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5855,
+              "resolution_share": 0.00016,
+              "bias_ratio": 0.5385,
+              "ece_relative": 0.7111,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 227.6,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.02349,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6255,
+              "resolution_share": 0.000689,
+              "bias_ratio": 0.3131,
+              "ece_relative": 0.6869,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6249,
+              "resolution_share": 0.000708,
+              "bias_ratio": 0.2944,
+              "ece_relative": 0.7056,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.5767,
+              "resolution_share": 0.000102,
+              "bias_ratio": 0.3919,
+              "ece_relative": 0.7403,
+              "retrieval_auc": 0.6953
+            }
+          }
+        },
+        {
+          "fit_seconds": 226.9,
+          "cut_fallback_share": 0.0,
+          "final_epoch_loss": 0.15531,
+          "heads": {
+            "click": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6205,
+              "resolution_share": 0.000717,
+              "bias_ratio": 0.2966,
+              "ece_relative": 0.7034,
+              "retrieval_auc": 0.7138
+            },
+            "cart": {
+              "n": 120000,
+              "positives": 267,
+              "base_rate": 0.002225,
+              "auc": 0.6193,
+              "resolution_share": 0.000709,
+              "bias_ratio": 0.3126,
+              "ece_relative": 0.6874,
+              "retrieval_auc": 0.7138
+            },
+            "purchase": {
+              "n": 120000,
+              "positives": 116,
+              "base_rate": 0.000967,
+              "auc": 0.584,
+              "resolution_share": 0.000164,
+              "bias_ratio": 0.3732,
+              "ece_relative": 0.7683,
+              "retrieval_auc": 0.6953
+            }
+          }
+        }
+      ],
+      "heads": {
+        "click": {
+          "auc_mean": 0.6312,
+          "auc_std": 0.011,
+          "values": [
+            0.634,
+            0.6272,
+            0.6489,
+            0.6255,
+            0.6205
+          ],
+          "bias_ratio_mean": 0.5101,
+          "retrieval_auc": 0.7138,
+          "over_chance": 0.1312,
+          "control_over_chance": 0.0455,
+          "vs_control": 2.884,
+          "beyond_seed_noise": true
+        },
+        "cart": {
+          "auc_mean": 0.6315,
+          "auc_std": 0.0109,
+          "values": [
+            0.6355,
+            0.6299,
+            0.6477,
+            0.6249,
+            0.6193
+          ],
+          "bias_ratio_mean": 0.589,
+          "retrieval_auc": 0.7138,
+          "over_chance": 0.1315,
+          "control_over_chance": 0.0463,
+          "vs_control": 2.84,
+          "beyond_seed_noise": true
+        },
+        "purchase": {
+          "auc_mean": 0.5786,
+          "auc_std": 0.0065,
+          "values": [
+            0.5774,
+            0.5694,
+            0.5855,
+            0.5767,
+            0.584
+          ],
+          "bias_ratio_mean": 0.9192,
+          "retrieval_auc": 0.6953,
+          "over_chance": 0.0786,
+          "control_over_chance": 0.0196,
+          "vs_control": 4.01,
+          "beyond_seed_noise": false
+        }
+      },
+      "cut_fallback_share": 0.0
+    }
+  }
+}
