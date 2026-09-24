@@ -1,0 +1,296 @@
+# Alerts on what this system actually does wrong, not on what is easy to graph.
+#
+# The metric names here are the ones `src/retailgr/serving/metrics.py` emits
+# and `tests/test_alerts.py` asserts that correspondence — an alert rule that
+# names a metric nobody exports is a rule that never fires, which is worse
+# than no rule because it looks like coverage.
+#
+# Two kinds of rule below. The first is a latency SLO with burn-rate windows,
+# the standard shape. The second is the set this project earned the hard way:
+# the fallback rate, a forced ranker, a stale bundle. Those are the failures
+# where the service keeps answering 200 and the answers quietly stop being
+# recommendations.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: serving
+    # Picked up by the Prometheus operator's ruleSelector.
+    prometheus: kube-prometheus
+    role: alert-rules
+spec:
+  groups:
+    - name: retailgr.slo
+      interval: 30s
+      rules:
+        # The SLO is expressed directly as a bucket that exists, which is why
+        # 0.1 is a bucket boundary in metrics.DURATION_BUCKETS rather than a
+        # number histogram_quantile would have to interpolate between.
+        - record: retailgr:request_slo_failure_ratio:rate5m
+          expr: |
+            1 - (
+              sum(rate(retailgr_request_duration_seconds_bucket{stage="total",le="0.1"}[5m]))
+              /
+              sum(rate(retailgr_request_duration_seconds_count{stage="total"}[5m]))
+            )
+        - record: retailgr:request_slo_failure_ratio:rate1h
+          expr: |
+            1 - (
+              sum(rate(retailgr_request_duration_seconds_bucket{stage="total",le="0.1"}[1h]))
+              /
+              sum(rate(retailgr_request_duration_seconds_count{stage="total"}[1h]))
+            )
+        - record: retailgr:request_slo_failure_ratio:rate6h
+          expr: |
+            1 - (
+              sum(rate(retailgr_request_duration_seconds_bucket{stage="total",le="0.1"}[6h]))
+              /
+              sum(rate(retailgr_request_duration_seconds_count{stage="total"}[6h]))
+            )
+
+        # Multi-window, multi-burn-rate. Two windows per alert so a brief
+        # spike does not page and a real burn is not waited out: the short
+        # window makes it fast, the long window makes it true.
+        - alert: RetailGRLatencyBudgetBurningFast
+          expr: |
+            retailgr:request_slo_failure_ratio:rate5m > (14.4 * 0.01)
+            and
+            retailgr:request_slo_failure_ratio:rate1h > (14.4 * 0.01)
+          for: 2m
+          labels:
+            severity: page
+            slo: latency
+          annotations:
+            summary: "Latency SLO burning 14x budget"
+            description: >-
+              More than 14% of requests are over the 100 ms budget across both a
+              5-minute and a 1-hour window. At this rate a 30-day error budget of
+              1% is gone in about two days.
+            runbook: >-
+              Check retailgr_request_duration_seconds by stage: the budget is
+              context 10ms, retrieval 25ms, filter 5ms, ranking 35ms, rerank 5ms.
+              If ranking dominates, the ranker was forced past its gate.
+
+        - alert: RetailGRLatencyBudgetBurningSlow
+          expr: |
+            retailgr:request_slo_failure_ratio:rate6h > (6 * 0.01)
+          for: 15m
+          labels:
+            severity: ticket
+            slo: latency
+          annotations:
+            summary: "Latency SLO burning 6x budget over 6 hours"
+            description: >-
+              Not urgent enough to wake anyone, sustained enough that the error
+              budget will not survive the month.
+
+    - name: retailgr.correctness
+      interval: 30s
+      rules:
+        # The one that matters most and shows up in no standard dashboard.
+        # Every fallback returns 200 with a plausible list of popular items,
+        # so latency, error rate and saturation all look perfect while the
+        # model has stopped participating.
+        - alert: RetailGRServingFallbacks
+          expr: |
+            (
+              sum(rate(retailgr_requests_total{served_from!="model"}[10m]))
+              /
+              sum(rate(retailgr_requests_total[10m]))
+            ) > 0.05
+          for: 10m
+          labels:
+            severity: page
+            slo: correctness
+          annotations:
+            summary: "More than 5% of responses are not coming from the model"
+            description: >-
+              retailgr_requests_total is split by served_from. cold_start means
+              the online store has no history for these users — check the
+              streaming consumer. retrieval_error means the index or the encoder
+              is failing. policy_emptied means the policy layer removed every
+              candidate, usually an inventory feed that has gone stale and is
+              reporting everything out of stock. store_error means the online
+              store is unreachable and the pod is serving a cached popular
+              list from memory; that one used to be a 500 and is now the
+              quietest of the four.
+            runbook: >-
+              sum by (served_from) (rate(retailgr_requests_total[10m]))
+              names which of the four it is. They have different causes and
+              only one of them is the model's fault.
+
+        - alert: RetailGRRetrievalErrors
+          expr: |
+            sum(rate(retailgr_requests_total{served_from="retrieval_error"}[5m])) > 0
+          for: 5m
+          labels:
+            severity: page
+            slo: correctness
+          annotations:
+            summary: "Retrieval is throwing"
+            description: >-
+              Any sustained rate here is abnormal: the request path catches the
+              exception and falls back, so this never surfaces as a 5xx.
+            runbook: >-
+              The exception is in the pod logs under the request_id this
+              response was served with; the exposure topic has the same id, so
+              the served list is recoverable. Usual causes are an index that
+              failed to load on a restarted pod (check /readyz, which reports
+              index_size) and an encoder given a sequence longer than max_len.
+
+        - alert: RetailGREmptyResponses
+          expr: |
+            (
+              sum(rate(retailgr_items_returned_bucket{le="0"}[10m]))
+              /
+              sum(rate(retailgr_items_returned_count[10m]))
+            ) > 0.01
+          for: 10m
+          labels:
+            severity: ticket
+            slo: correctness
+          annotations:
+            summary: "1% of responses carry no items at all"
+            description: >-
+              An empty list is a 200 with an empty array, so it is invisible to
+              every error-rate panel in the stack. The three ways to get here are
+              a policy layer that removed every candidate, a retrieval index that
+              returned nothing for the request, and a limit of zero from a caller
+              that thinks it is asking for a page size.
+
+        - alert: RetailGRPolicyDroppingEverything
+          expr: |
+            sum(rate(retailgr_policy_dropped_total{reason="dropped_out_of_stock"}[15m]))
+            /
+            clamp_min(sum(rate(retailgr_policy_dropped_total[15m])), 1)
+            > 0.9
+          for: 15m
+          labels:
+            severity: ticket
+            slo: correctness
+          annotations:
+            summary: "Nearly every policy drop is out-of-stock"
+            description: >-
+              Normal operation drops candidates for several reasons. When one
+              reason accounts for almost all of them the usual cause is a feed,
+              not the catalogue: an inventory topic that stopped consuming leaves
+              every item reading zero stock.
+
+        # The exposure log is how unbiased training labels exist at all: it
+        # is the only record of what the customer was *shown* and did not
+        # click. `_log_exposure` swallows every exception so a dead broker
+        # cannot fail a request, which means a dead broker is invisible from
+        # the customer's side and from every latency panel.
+        #
+        # A ratio, not a rate, on purpose: with no logger configured nothing
+        # is attempted, the denominator is empty, and this stays silent
+        # rather than paging about a feature nobody turned on.
+        - alert: RetailGRExposureLogFailing
+          expr: |
+            (
+              sum(rate(retailgr_exposure_log_total{outcome="failed"}[15m]))
+              /
+              sum(rate(retailgr_exposure_log_total[15m]))
+            ) > 0.05
+          for: 15m
+          labels:
+            severity: ticket
+            slo: correctness
+          annotations:
+            summary: "Exposure logging is failing"
+            description: >-
+              Requests are being served normally and the record of what was
+              shown is not being written. Nothing else in the stack reports
+              this: the write is deliberately best-effort so it cannot fail a
+              customer request. The cost is silent and deferred — the next
+              model trains without knowing which items were displayed and
+              ignored, which is the difference between a rejection and an
+              absence.
+
+    - name: retailgr.deployment
+      interval: 1m
+      rules:
+        # The offline gate blocks a ranker that orders worse than retrieval.
+        # `--force-ranker` overrides it deliberately; this makes the override
+        # visible in production rather than only in the run that shipped it.
+        - alert: RetailGRRankerServedDespiteGate
+          expr: |
+            max(retailgr_build_info{ranker_served="true"}) == 1
+          for: 5m
+          labels:
+            severity: ticket
+            slo: correctness
+          annotations:
+            summary: "A bundle is serving with the ranker enabled"
+            description: >-
+              Expected only when the ranker passed its offline gate or was
+              forced past it on purpose. On the measurements in this repository
+              the ranker orders candidates 0.20x as well as retrieval, so this
+              firing unexpectedly means someone shipped --force-ranker.
+
+        # Freshness is arithmetic on a timestamp, not `changes()` on the
+        # build-info gauge. That gauge's value is the constant 1, so
+        # `changes()` over it counts replica scaling, and a version deployed
+        # an hour ago has zero changes and fires as stale — the alert was
+        # inverted. `retailgr_build_timestamp_seconds` exists so this
+        # question has a number to ask it of.
+        - alert: RetailGRBundleStale
+          expr: |
+            time() - max(retailgr_build_timestamp_seconds) > 7 * 24 * 3600
+          for: 1h
+          labels:
+            severity: ticket
+            slo: freshness
+          annotations:
+            summary: "The newest serving bundle is over a week old"
+            description: >-
+              The export CronJob runs nightly and no pod anywhere is serving a
+              bundle newer than seven days, so the job is failing silently or its
+              output is not reaching the cluster. The recommendations are drifting
+              away from the catalogue while the service reports perfect health.
+            runbook: >-
+              max() and not min() on purpose: this asks whether anything new is
+              being produced at all. A single pod left behind on an old bundle is
+              a different failure and is RetailGRBundleVersionSkew below. Check
+              the retailgr-export CronJob's last successful completion first.
+
+        # The other half of the same question. One model_version is normal;
+        # two for half an hour means a rollout stopped partway and some
+        # customers are being served by a model the others are not.
+        - alert: RetailGRBundleVersionSkew
+          expr: |
+            count(count by (model_version) (retailgr_build_info)) > 1
+          for: 30m
+          labels:
+            severity: ticket
+            slo: freshness
+          annotations:
+            summary: "Replicas are serving more than one model version"
+            description: >-
+              Expected for a few minutes during a rolling update. Sustained, it
+              means the rollout is stuck — usually a pod that cannot pull the new
+              bundle — and an A/B comparison of serving metrics is now measuring
+              two models without anyone having asked for that.
+
+        - alert: RetailGRNoTraffic
+          expr: |
+            sum(rate(retailgr_requests_total[10m])) == 0
+          for: 10m
+          labels:
+            severity: page
+            slo: availability
+          annotations:
+            summary: "No recommendation requests at all"
+            description: >-
+              Every other alert here is a ratio, and a ratio over zero traffic is
+              not a number. This is the one that fires when the others go quiet
+              because nothing is arriving.
+            runbook: >-
+              Check whether the pods are being scraped before assuming the
+              traffic stopped: up{job="retailgr"} == 0 means this alert is about
+              Prometheus, not about the service. If the targets are up, the
+              Service has no endpoints or the caller is failing before it
+              reaches here — neither is visible from inside this process.

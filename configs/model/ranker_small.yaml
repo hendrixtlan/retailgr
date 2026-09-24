@@ -1,0 +1,119 @@
+# HSTU ranker - small preset, matched to hstu_small.yaml so the two stages are
+# comparable in capacity.
+#
+# The ranker sees a different sequence from the retrieval model: items and
+# actions interleaved as separate positions (Table 1 of the HSTU paper), with
+# candidate items appended. That doubles the sequence length for the same
+# number of events, so max_events is what to tune, not max_len.
+name: ranker_small
+type: hstu_ranker
+
+hidden_dim: 64
+num_blocks: 2
+num_heads: 2
+dropout: 0.2
+
+# Events of history. The encoder sees 2 * max_events + candidates positions.
+max_events: 50
+
+# Width of each head's MLP on top of the encoder.
+head_hidden: 64
+
+batch_size: 64
+epochs: 8
+learning_rate: 0.001
+weight_decay: 0.0
+seed: 13
+device: auto
+
+# M-FALCON: candidates scored per forward pass. Larger amortises the prefix
+# computation further; the scores are identical either way, which
+# tests/test_ranker.py asserts.
+candidate_micro_batch: 64
+
+# Sampled negatives per positive, at the candidate position. This is not a
+# tuning knob to shrug at: trained with positives only, the ranker calibrates
+# its heads beautifully (AUC 0.96-0.98) and still made re-ranking 89% WORSE
+# than retrieval order, because it had never seen an item the user would not
+# engage with. Setting this to 0 reproduces that failure.
+#
+# It is also where the ranker is structurally weaker than retrieval, which
+# trains against the full softmax — every item in the vocabulary, at every
+# position. The ranker sees num_negatives items at one position per user per
+# epoch. Closing that gap means more negatives, more epochs, and eventually
+# real negatives from the exposure log rather than uniform samples.
+num_negatives: 256
+# Weight of the discrimination loss relative to the teacher-forced loss.
+candidate_loss_weight: 1.0
+
+# Weight on the teacher-forced loss — the "at each history position, predict
+# the action taken on this item" objective. A scalar, or a per-head map.
+#
+# 0.1 rather than 1.0, and the reason is a measurement. On this dataset the
+# teacher-forced task is reproduced by a five-entry lookup on how many times
+# the same item just repeated — AUC 0.965 against the model's 0.986, and the
+# table *wins* on the purchase head. It was measuring the generator's
+# view -> cart -> purchase funnel, and its gradient was buying capacity for
+# that instead of for ranking.
+#
+# `retailgr slate-experiment` sweeps it. Slate AUC over chance, and the
+# return head, three seeds each:
+#
+#   weight  ordering  return head   share of the available gain
+#     1.0    +0.0437     0.8500        0%
+#     0.5    +0.0690     0.8273       27%
+#     0.25   +0.0775     0.8279       36%
+#     0.1    +0.1287     0.7195       91%   <- here
+#     0.0    +0.1367     0.5001      100%
+#
+# Monotone, so there is no interior optimum: the choice is a point on a
+# frontier, not a maximum. 0.1 takes 91% of the ordering gain for 15% of the
+# return head. Zero takes the last 9% and costs that head everything — it
+# collapses to chance, because with the history loss off it gets about one
+# label per user per epoch (its candidate-block negatives are fully masked:
+# something never bought cannot be returned).
+#
+# A per-head map is supported and was tried: keeping this loss for `return`
+# alone preserves that head and orders the slate *worse than 1.0*, which is
+# how the return head's own history loss was found to be specifically
+# harmful to ordering — the other three heads had been counteracting it.
+history_loss_weight: 0.1
+
+attention_dim: null
+head_hidden_dim: null
+
+use_relative_bias: true
+use_temporal_bias: true
+num_time_buckets: 128
+
+# Relative weight of each head in the multi-task loss. The return head sees
+# far fewer labelled positions - only matured purchases - so it is upweighted
+# to stop it being drowned out by the click head.
+head_weights:
+  click: 1.0
+  cart: 1.0
+  purchase: 1.0
+  return: 2.0
+
+# Expected value, not importance dials:
+#
+#   score = purchase * P(purchase) * (1 - return_penalty * P(return))
+#         + cart * P(cart) + click * P(click)
+#
+# These weights are the RELATIVE BUSINESS VALUE of each outcome in one unit.
+# That matters because the heads do not share a scale and should not: a
+# purchase really is ~20x rarer than a cart-add, so P(purchase) really is ~20x
+# smaller. Weighting them as if comparable (purchase 1.0, cart 0.3) made the
+# blend equal to "0.3 x cart" and discarded the purchase head entirely —
+# measured on this dataset, not hypothesised. As value, the rarity and the
+# worth cancel.
+#
+# Set these from your own margins: purchase 1.0 is the anchor, cart is what an
+# add-to-cart is worth in the same unit, click likewise.
+score_blend:
+  click: 0.005
+  cart: 0.05
+  purchase: 1.0
+  # Share of a purchase's value destroyed by a certain return. 1.0 = worth
+  # nothing; above 1.0 also charges the reverse logistics.
+  return_penalty: 1.0

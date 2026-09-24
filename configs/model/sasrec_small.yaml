@@ -1,0 +1,47 @@
+# SASRec baseline - small preset. Trains on CPU in a few minutes on the
+# synthetic dataset; use sasrec_base.yaml for real data on a GPU.
+name: sasrec_small
+type: sasrec
+
+hidden_dim: 64
+num_blocks: 2
+num_heads: 2
+dropout: 0.2
+max_len: 50
+
+# Loss over the full vocabulary. Switch to "sampled_softmax" once the token
+# vocabulary is large enough that the full softmax dominates the step time.
+loss: full_softmax
+num_negatives: 128
+
+batch_size: 128
+epochs: 8
+learning_rate: 0.001
+weight_decay: 0.0
+seed: 13
+device: auto
+
+# How long to train is decided by the validation split, not by this file.
+#
+# `fit(train, val)` always accepted a validation split and, until this block
+# existed, no model read it: every result in the README was taken at a fixed
+# epoch count while the call sites suggested otherwise. `retailgr
+# convergence` measured what that fixed count cost on the synthetic data —
+# three seeds, both schedules scored on test, paired per user:
+#
+#   sasrec_small  best epochs 3, 3, 7   converged vs 8 epochs  -0.0012  p=0.401
+#   hstu_small    best epochs 6, 8, 3   converged vs 8 epochs  -0.0001  p=0.845
+#
+# Nothing. Validation NDCG peaks by epoch 3-8 and then sits flat while the
+# training loss keeps falling from ~6.4 to ~3.5: these models run out of
+# data long before they run out of epochs, so more training was never the
+# lever. It is on anyway because `epochs` above was tuned to nothing — it
+# happened to land on this dataset's plateau — and the next dataset will not
+# be this one. `epochs` still applies when no validation split is passed.
+early_stopping:
+  enabled: true
+  metric: ndcg@10
+  # The plateau is reached by epoch 8 in every run measured, so five epochs
+  # without improvement is enough to know it has been reached.
+  patience: 5
+  max_epochs: 100

@@ -1,0 +1,49 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: retailgr
+      app.kubernetes.io/component: serving
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: retailgr-serving
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+    # CPU, not memory. Memory here is ~97% framework and barely moves with
+    # load, so a memory-based target would never fire; measured throughput is
+    # 233 req/s per core, which is what turns a traffic figure into a replica
+    # count.
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+  behavior:
+    scaleUp:
+      # Cold start is ~1.1 s, so scaling up is cheap and can be prompt.
+      stabilizationWindowSeconds: 30
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60

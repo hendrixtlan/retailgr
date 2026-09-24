@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: serving
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: retailgr
+      app.kubernetes.io/component: serving
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: retailgr
+        app.kubernetes.io/component: serving
+    spec:
+      serviceAccountName: retailgr-serving
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      # Spread across nodes so losing one does not take the service with it.
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: retailgr
+              app.kubernetes.io/component: serving
+      # No init container. An earlier draft had one pulling the bundle from
+      # object storage at start-up, which reads well and referenced a
+      # `retailgr fetch-bundle` command that does not exist — the kind of
+      # manifest that validates perfectly and fails on first apply.
+      # `tests/test_deploy.py` now asserts that every command a manifest
+      # invokes is a real CLI subcommand, which is why this comment exists
+      # instead of that container.
+      #
+      # The bundle is baked into the image at build time instead, so a model
+      # version and a code version are one immutable artifact and a rollback
+      # is a rollback of both. The nightly export CronJob builds and pushes
+      # that image; it does not write into a volume this Deployment reads.
+      containers:
+        - name: api
+          image: ghcr.io/example/retailgr:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: retailgr-serving
+          env:
+            # One BLAS thread per pod. OpenMP otherwise reads the node's core
+            # count, ignores the CPU request, and spawns threads that fight
+            # each other inside one core's worth of quota.
+            - name: OMP_NUM_THREADS
+              value: "1"
+            - name: MKL_NUM_THREADS
+              value: "1"
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          # Measured, not copied. `retailgr sizing` reports a warm resident
+          # set of 523 MiB, of which ~504 MiB is PyTorch initialising and
+          # 1.3 MiB is the bundle. Request is warm + 25%; the limit is 2x
+          # because a memory limit is a kill switch, not a target.
+          resources:
+            requests:
+              cpu: 500m
+              memory: 654Mi
+            limits:
+              memory: 1047Mi
+          # No CPU limit on purpose: a CPU limit throttles rather than kills,
+          # and throttling a latency-budgeted path turns into p99 spikes that
+          # get misread as a model problem.
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 2
+            failureThreshold: 15
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: serving
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: serving
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

@@ -1,0 +1,162 @@
+# The batch side. Kept as plain Jobs rather than a Spark-operator CRD so this
+# directory validates against the core API alone; the operator's SparkApplication
+# is a drop-in replacement for the same command once it is installed.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: retailgr-sequences
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: batch
+spec:
+  schedule: "0 2 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: retailgr-serving
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: sequences
+              image: ghcr.io/example/retailgr:0.1.0
+              command: ["retailgr", "sequences"]
+              envFrom:
+                - configMapRef:
+                    name: retailgr-serving
+              resources:
+                requests:
+                  cpu: "2"
+                  memory: 4Gi
+                limits:
+                  memory: 8Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: retailgr-export
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: batch
+spec:
+  # After the sequence job, so the export trains on the night's tables.
+  schedule: "0 4 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: retailgr-serving
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: export
+              # The offline gate runs inside this command and decides whether
+              # the ranker is written into the bundle at all. A blocked ranker
+              # is not a failed job — the bundle still ships, serving
+              # retrieval order — which is why there is no --force-ranker here.
+              command: ["retailgr", "export-model", "--output", "/bundle"]
+              image: ghcr.io/example/retailgr:0.1.0
+              envFrom:
+                - configMapRef:
+                    name: retailgr-serving
+              volumeMounts:
+                - name: bundle
+                  mountPath: /bundle
+              resources:
+                requests:
+                  cpu: "2"
+                  memory: 4Gi
+                limits:
+                  memory: 8Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+          volumes:
+            - name: bundle
+              emptyDir:
+                sizeLimit: 2Gi
+---
+# Retention. This CronJob is the reason `privacy.retention.*` means anything:
+# the settings sat in the config with a paragraph explaining why bronze is the
+# shortest window, and nothing read them, so bronze was retained for ever
+# under a comment saying thirty days.
+#
+# Weekly rather than nightly on purpose. It rewrites whole tables, and a
+# retention pass that competes with the nightly sequences job for the same
+# warehouse is how a training run reads a table mid-overwrite. It runs on
+# Sunday, after `retailgr-sequences` and `retailgr-export` have finished.
+#
+# `backoffLimit: 0` because a refusal is not a transient failure. The job
+# exits non-zero when the window would remove more than `max_delete_share` of
+# a table, which means the configuration is wrong; retrying it three times
+# produces three identical refusals and buries the message.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: retailgr-retention
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: batch
+spec:
+  schedule: "0 6 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: retailgr-serving
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: retention
+              image: ghcr.io/example/retailgr:0.1.0
+              command: ["retailgr", "retention"]
+              envFrom:
+                - configMapRef:
+                    name: retailgr-serving
+              resources:
+                requests:
+                  cpu: "2"
+                  memory: 4Gi
+                limits:
+                  memory: 8Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]

@@ -1,0 +1,38 @@
+# RetailGR - item granularity configuration.
+#
+# The SKU is the system of record everywhere in the lakehouse. This file only
+# decides which unit the MODEL sees as one token, per category.
+#
+# Levels:
+#   sku          -> one token per purchasable variant (size, colour, pack)
+#   style_color  -> sizes collapsed, colour kept apart
+#   product      -> every variant of the same product collapsed
+#
+# A level may be refined with `plus_attributes`, which appends catalog
+# attributes to the token so they stay distinguishable:
+#   electronics: {level: product, plus_attributes: [capacity]}
+#   -> "P-1041|capacity=256GB"
+
+default: sku
+
+by_category:
+  apparel:
+    level: style_color
+  footwear:
+    level: style_color
+  electronics:
+    level: product
+    plus_attributes: [capacity]
+  home:
+    level: style_color
+  grocery:
+    level: sku
+  pharmacy:
+    level: sku
+
+# Size is fit, not preference: it is modelled as a per-user affinity used at
+# serving time to pick the SKU, never as part of the item token.
+size_affinity:
+  enabled_for: [apparel, footwear]
+  # Purchases returned for these reasons do not count as a kept size.
+  exclude_return_reasons: [too_small, too_large, fit]

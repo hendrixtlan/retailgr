@@ -1,0 +1,83 @@
+# HSTU baseline - small preset, matched to sasrec_small.yaml so the comparison
+# isolates the architecture rather than the capacity.
+#
+# hidden_dim, num_blocks, num_heads, dropout, max_len, loss, batch_size,
+# epochs, learning_rate and seed are all identical to sasrec_small.yaml. Only
+# the HSTU-specific knobs below are extra.
+name: hstu_small
+type: hstu
+
+hidden_dim: 64
+num_blocks: 2
+num_heads: 2
+dropout: 0.2
+max_len: 50
+
+loss: full_softmax
+num_negatives: 128
+
+batch_size: 128
+epochs: 8
+learning_rate: 0.001
+weight_decay: 0.0
+seed: 13
+device: auto
+
+# -- HSTU specific ------------------------------------------------------------
+
+# Per-head Q/K and V/U widths. Left unset they default to hidden_dim/num_heads,
+# which keeps the parameter count close to SASRec's.
+attention_dim: null
+head_hidden_dim: null
+
+# rab^{p,t}: the learned relative positional and temporal attention bias.
+#
+# These stay at the paper's setting, which is the honest starting point. Run
+# `make ablate` before trusting them on your data: on the synthetic dataset the
+# temporal bias costs about 4 points of NDCG, because its 129 free parameters
+# have no real time signal to fit. On a real event stream it should pay for
+# itself - but that is a measurement, not an assumption.
+use_relative_bias: true
+use_temporal_bias: true
+num_time_buckets: 128
+
+# Divide attention weights by the padded window length ("max_len", what the
+# reference implementation does) or by each user's own history length
+# ("sequence_len"). The second matters when histories are much shorter than
+# max_len, which is common outside web-scale feeds.
+normalise_by: max_len
+
+# Set to false to drop the action modality, which reduces HSTU to an
+# item-only model. `make ablate` reports what it is worth.
+use_actions: true
+
+# Table 1 of the paper: a position supervises the next item only when that
+# item's action was positive. Set supervise_positive_only to false to train on
+# every next item, which is the ablation that isolates the action modality.
+supervise_positive_only: true
+positive_actions: [view, click, add_to_cart, purchase]
+
+# How long to train is decided by the validation split, not by this file.
+#
+# `fit(train, val)` always accepted a validation split and, until this block
+# existed, no model read it: every result in the README was taken at a fixed
+# epoch count while the call sites suggested otherwise. `retailgr
+# convergence` measured what that fixed count cost on the synthetic data —
+# three seeds, both schedules scored on test, paired per user:
+#
+#   sasrec_small  best epochs 3, 3, 7   converged vs 8 epochs  -0.0012  p=0.401
+#   hstu_small    best epochs 6, 8, 3   converged vs 8 epochs  -0.0001  p=0.845
+#
+# Nothing. Validation NDCG peaks by epoch 3-8 and then sits flat while the
+# training loss keeps falling from ~6.4 to ~3.5: these models run out of
+# data long before they run out of epochs, so more training was never the
+# lever. It is on anyway because `epochs` above was tuned to nothing — it
+# happened to land on this dataset's plateau — and the next dataset will not
+# be this one. `epochs` still applies when no validation split is passed.
+early_stopping:
+  enabled: true
+  metric: ndcg@10
+  # The plateau is reached by epoch 8 in every run measured, so five epochs
+  # without improvement is enough to know it has been reached.
+  patience: 5
+  max_epochs: 100

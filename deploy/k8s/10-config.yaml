@@ -1,0 +1,27 @@
+# Everything that names an external system lives here, which is the whole
+# portability claim in one file: the image is identical on every cloud, and
+# this ConfigMap is what differs. `retailgr audit` fails the build if an
+# address ever moves out of configuration and into the code.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: retailgr-serving
+  namespace: retailgr
+  labels:
+    app.kubernetes.io/name: retailgr
+    app.kubernetes.io/component: serving
+data:
+  # S3-compatible, not S3. MinIO, Ceph, GCS in interoperability mode and
+  # every managed object store speak this; naming a vendor's SDK instead is
+  # exactly the lock-in this project refuses.
+  WAREHOUSE_BACKEND: "iceberg"
+  ICEBERG_CATALOG_URI: "http://iceberg-rest.retailgr.svc.cluster.local:8181"
+  S3_ENDPOINT: "http://minio.retailgr.svc.cluster.local:9000"
+  ONLINE_STORE_BACKEND: "redis"
+  ONLINE_STORE_URL: "redis://redis.retailgr.svc.cluster.local:6379/0"
+  STREAMING_BROKER: "kafka"
+  KAFKA_BOOTSTRAP_SERVERS: "retailgr-kafka-bootstrap.retailgr.svc.cluster.local:9092"
+  # `exact` until the catalogue passes the measured crossover: below roughly
+  # 100k items FAISS is no faster and returns less. See the table in
+  # serving/retrieval.py.
+  SERVING_RETRIEVAL_INDEX: "exact"

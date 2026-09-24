@@ -1,0 +1,66 @@
+# HSTU for MovieLens-1M, aligned with the public-experiment setup in the
+# HSTU paper: 200-length sequences and a sampled-softmax loss (the paper's
+# ml-1m configs use 128 sampled negatives) rather than a full softmax over
+# the catalog.
+name: hstu_ml1m
+type: hstu
+
+hidden_dim: 64
+num_blocks: 2
+num_heads: 2
+dropout: 0.2
+max_len: 200
+
+loss: sampled_softmax
+num_negatives: 128
+
+batch_size: 128
+epochs: 8
+learning_rate: 0.001
+weight_decay: 0.0
+seed: 13
+device: auto
+
+# -- HSTU specific ------------------------------------------------------------
+attention_dim: null
+head_hidden_dim: null
+
+# The open question these presets exist to settle: MovieLens timestamps are
+# real and span ~3 years, so unlike the synthetic data the temporal bias has
+# genuine signal to fit. `retailgr ablate --dataset ml1m` measures it.
+use_relative_bias: true
+use_temporal_bias: true
+num_time_buckets: 128
+
+normalise_by: max_len
+use_actions: true
+
+# Ratings map to actions: >=4 purchase, ==3 view, <=2 remove_from_cart.
+# Only the first two make the next item a target.
+supervise_positive_only: true
+positive_actions: [view, click, add_to_cart, purchase]
+
+# How long to train is decided by the validation split, not by this file.
+#
+# `fit(train, val)` always accepted a validation split and, until this block
+# existed, no model read it: every result in the README was taken at a fixed
+# epoch count while the call sites suggested otherwise. `retailgr
+# convergence` measured what that fixed count cost on the synthetic data —
+# three seeds, both schedules scored on test, paired per user:
+#
+#   sasrec_small  best epochs 3, 3, 7   converged vs 8 epochs  -0.0012  p=0.401
+#   hstu_small    best epochs 6, 8, 3   converged vs 8 epochs  -0.0001  p=0.845
+#
+# Nothing. Validation NDCG peaks by epoch 3-8 and then sits flat while the
+# training loss keeps falling from ~6.4 to ~3.5: these models run out of
+# data long before they run out of epochs, so more training was never the
+# lever. It is on anyway because `epochs` above was tuned to nothing — it
+# happened to land on this dataset's plateau — and the next dataset will not
+# be this one. `epochs` still applies when no validation split is passed.
+early_stopping:
+  enabled: true
+  metric: ndcg@10
+  # The plateau is reached by epoch 8 in every run measured, so five epochs
+  # without improvement is enough to know it has been reached.
+  patience: 5
+  max_epochs: 100

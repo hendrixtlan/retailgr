@@ -1,0 +1,248 @@
+# RetailGR - Stage 1 pipeline configuration.
+# Everything the offline slice needs: where data lives, how it is cleaned,
+# how sequences are built and how the time split is drawn.
+
+project: retailgr
+
+warehouse:
+  # parquet -> plain local Parquet, no extra jars. Use for laptops / CI.
+  # iceberg -> Apache Iceberg via the REST catalog in docker/docker-compose.yml.
+  backend: parquet
+  root: ./data/warehouse
+  iceberg:
+    # Which engine reaches the format. Two engines, one Iceberg v2 table.
+    #   auto      -> Spark when its runtime jars are on the classpath, else
+    #                pyiceberg. The batch jobs already hold a DataFrame, so
+    #                Spark is preferred when it can actually write.
+    #   spark     -> force Spark; fails loudly if the jars are missing.
+    #   pyiceberg -> force the JVM-free path. No Maven, no jars, no session —
+    #                which is the only way this repository's own environment
+    #                can execute the Iceberg backend at all, and a reasonable
+    #                default for any air-gapped cluster.
+    engine: auto
+    catalog_name: retailgr
+    # Iceberg REST catalog endpoint (docker-compose service "iceberg-rest").
+    # Leave empty for a SQL catalog beside warehouse.root, which needs no
+    # service running; the tables on disk are identical either way.
+    uri: http://localhost:8181
+    warehouse: s3://retailgr/warehouse
+    # MinIO endpoint used as the S3-compatible object store.
+    s3_endpoint: http://localhost:9000
+    # Pulled at runtime by Spark; must match the Spark/Scala version.
+    spark_packages:
+      - org.apache.iceberg:iceberg-spark-runtime-4.0_2.13:1.10.0
+      - org.apache.iceberg:iceberg-aws-bundle:1.10.0
+
+spark:
+  app_name: retailgr-stage1
+  master: "local[*]"
+  driver_memory: 4g
+  shuffle_partitions: 16
+  local_dir: ./data/tmp
+
+dataset:
+  # synthetic | rees46 | hm
+  name: synthetic
+  raw_path: ./data/raw
+  synthetic:
+    n_users: 3000
+    n_products: 500
+    days: 60
+    seed: 7
+    # What share of users grant each purpose. Nested, not independent: a
+    # user who refuses analytics is not separately asked about
+    # personalisation. `retailgr consent-cost` sweeps these and reports what
+    # the model loses, so the numbers are a dial rather than a guess.
+    consent_analytics_rate: 0.85
+    consent_personalisation_rate: 0.70
+  rees46:
+    # Kaggle: "eCommerce behavior data from multi category store".
+    # Drop the monthly CSVs into data/raw/rees46/.
+    glob: "rees46/*.csv"
+  hm:
+    # Kaggle: "H&M Personalized Fashion Recommendations".
+    transactions: "hm/transactions_train.csv"
+    articles: "hm/articles.csv"
+  ml1m:
+    # MovieLens-1M. No item variants, so the granularity variants collapse -
+    # but real timestamps over ~3 years, which is what tests HSTU's temporal
+    # bias. Fetch with scripts/fetch_movielens.sh.
+    train: "ml1m/ml-1m.train.rating"
+    test: "ml1m/ml-1m.test.rating"
+  ml100k:
+    # MovieLens-100K. Smaller, but carries real genres, so the per-category
+    # breakdown in the report is meaningful.
+    interactions: "ml100k/ml-100k.inter"
+    items: "ml100k/ml-100k.item"
+
+# What this system is allowed to keep, about whom, and for how long.
+#
+# The defaults here are deliberately the strict ones. A privacy setting that
+# ships permissive and relies on each deployment to tighten it is a setting
+# that is permissive everywhere.
+privacy:
+  consent:
+    # Drop events in silver whose consent does not cover the purpose below.
+    # With this on and a source that carries no consent at all, the silver
+    # job refuses to run rather than choose between silently keeping
+    # everything and silently dropping everything. A public research dataset
+    # genuinely has no consent signal, so `make movielens` turns this off on
+    # the command line, deliberately and visibly.
+    enforce: true
+    # serving | analytics | training. Silver is the analytics layer; the
+    # sequences job applies `training` on top, which additionally requires
+    # the personalisation purpose.
+    consumer: analytics
+  pseudonymisation:
+    # Off by default, and this is the one default that is *not* the strict
+    # option — on purpose. Turning it on without a key management story
+    # produces a warehouse nobody can join to a support ticket and an
+    # erasure path that depends on a secret somebody has to still have in a
+    # year. It should be a decision, not something that happened.
+    enabled: false
+    # No default key exists. Set it here or in RETAILGR_PSEUDONYM_KEY; a key
+    # committed to this repository would make every pseudonym reversible by
+    # anyone who can read it, while looking exactly as safe as a real one.
+    key: null
+    length: 32
+  retention:
+    # Days each layer keeps an event before the retention job removes it.
+    # Bronze is short because it is the only layer holding raw, unfiltered,
+    # un-pseudonymised events. Gold is longest because a sequence model
+    # trained on 30 days of history is a different model.
+    bronze_days: 30
+    silver_days: 400
+    gold_days: 400
+    # Seconds a user's serving tail survives without being touched. The tail
+    # was bounded by *count* (50 events) and not by time, so a customer who
+    # stopped shopping kept their last 50 events for ever.
+    online_store_ttl_seconds: 7776000  # 90 days
+    # Iceberg keeps every prior snapshot readable, so deleting rows without
+    # expiring snapshots deletes nothing. This is the window after which a
+    # superseded snapshot is removed.
+    snapshot_expiry_days: 7
+    # wall | data. `wall` is "older than N days from now", which is what
+    # retention means and what production needs. `data` measures from the
+    # newest event in bronze — the reading that makes a fixed sample dataset
+    # work and that would silently retain everything for ever in production,
+    # because the newest event is always today. It has to be asked for.
+    clock: wall
+    # A pass that would remove more than this share of a table refuses
+    # instead. Removing nearly everything is far more likely to be a wrong
+    # clock, days confused with hours, or a backfill of historical data than
+    # an intended policy — and an empty warehouse is an expensive way to find
+    # that out. The sample dataset's events are months old, so `make
+    # retention` on it hits this guard, deliberately.
+    max_delete_share: 0.5
+
+clean:
+  min_events_per_user: 5
+  # Guard against scrapers and shared accounts.
+  max_events_per_user: 2000
+  # Users above this many events in a single day are treated as bots.
+  bot_events_per_day: 500
+  drop_event_types: []
+
+sequences:
+  # Longest user history fed to the model. HSTU scales far beyond this;
+  # SASRec on CPU does not.
+  max_len: 200
+  # How long a customer has to send something back. A purchase newer than
+  # this has not had time to be returned, so it is marked immature and
+  # excluded from the ranker's return head rather than labelled "kept" -
+  # otherwise the head learns that recent purchases are safe.
+  return_window_days: 30
+
+split:
+  # Global time cutoffs (quantiles of the event timestamp), not per-user
+  # leave-one-out: this is what production actually faces.
+  train_frac: 0.80
+  val_frac: 0.10
+  # Users need at least this many events before the cutoff to be scored.
+  min_input_events: 3
+  # Event types that count as a target during evaluation.
+  # Empty list means every event type counts.
+  target_event_types: []
+
+evaluation:
+  k_values: [10, 50, 200]
+  # Drop items the user already interacted with from the recommendations.
+  # Set to false for consumables, where repeat purchases are the point.
+  exclude_seen: true
+
+streaming:
+  # memory -> in-process broker. Faithful about partitioning, key ordering and
+  #           offsets, so the whole streaming path runs and is tested with no
+  #           infrastructure.
+  # kafka   -> real Kafka (docker/docker-compose.yml, or your own cluster).
+  broker: memory
+  bootstrap_servers: localhost:9092
+  client_id: retailgr
+  linger_ms: 20
+  memory_partitions: 4
+  # Schema Registry, used by the Kafka backend's Avro serializer.
+  schema_registry_url: http://localhost:8081
+
+online_store:
+  # memory -> in-process. redis -> a real Redis.
+  backend: memory
+  url: redis://localhost:6379/0
+  namespace: retailgr
+  # How many recent events the serving path keeps hot per user. The model
+  # reads a longer window from its own history; this is the fresh tail.
+  tail_length: 50
+
+serving:
+  device: cpu
+  # exact -> brute-force inner product, right up to a few hundred thousand
+  # items. faiss -> approximate, for larger catalogs.
+  retrieval_index: exact
+  # Candidates out of retrieval, then how many reach the ranker.
+  retrieval_k: 800
+  rank_k: 300
+  default_limit: 20
+  # Drop items the customer has already engaged with — per surface, because
+  # one global answer is wrong for at least one surface either way.
+  #
+  # Measured on the same trained model, two evaluations:
+  #     exclude_seen=true   recall@10 0.0968  (CI 0.0855-0.1088)
+  #     exclude_seen=false  recall@10 0.1969  (CI 0.1778-0.2145)
+  #
+  # Turning it off doubles recall on non-overlapping intervals. Only 20.4% of
+  # held-out targets are repeats, so this is not about how many repeats there
+  # are: repeats are what the sequence model is *most* confident about and it
+  # puts them at the very top, so excluding them serves its 11th-to-300th
+  # choices instead.
+  #
+  # The metric cannot settle it and this comment will not pretend it does.
+  # Recall counts a repeat as a hit; whether re-showing something the customer
+  # already found is worth anything is a question about the surface. A cart
+  # page and an abandonment email are reminders and want repeats. A home page
+  # asking for discovery is the one case where the filter earns its cost.
+  #
+  # A bare `true`/`false` still works and still means everywhere.
+  exclude_seen:
+    default: true
+    home: true
+    pdp: true
+    # Reminders. The whole point is the thing they already looked at.
+    cart: false
+    email: false
+  host: 127.0.0.1
+  port: 8080
+
+# The deterministic business layer. Read and changed without retraining -
+# that is the point of keeping it out of the model.
+policy:
+  require_in_stock: true
+  exclude_purchased: true
+  excluded_products: []
+  # Bounded multiplicative adjustments, so relevance still decides most of
+  # the order.
+  promo_boost: 1.15
+  price_affinity_weight: 0.10
+  max_total_boost: 1.5
+  # Diversity: at most this many items per category in the final list.
+  max_per_category: 3
+  # Merchandising: products pinned to the front, in order.
+  pinned_products: []
